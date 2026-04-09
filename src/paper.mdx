@@ -38,17 +38,19 @@ import HighlightedSection from "./components/HighlightedSection.astro";
 import SmallCaps from "./components/SmallCaps.astro";
 import Figure from "./components/Figure.astro";
 import Picture from "./components/Picture.astro";
-import TwoColumns from "./components/TwoColumns.astro";
 import Wide from "./components/Wide.astro";
+import Carousel from "./components/Carousel.astro";
+import CarouselSlide from "./components/CarouselSlide.astro";
+import TwoColumns from "./components/TwoColumns.astro";
+{/* import ModelViewer from "./components/ModelViewer.astro" */}
 
 import teaser from "./assets/teaser.webp";
 import modelOverview from "./assets/model_overview.webp";
 import datasetSample from "./assets/dataset_sample.webp";
 import datasetPipeline from "./assets/dataset_contruction_pipeline.webp";
 import benchDemo from "./assets/bench_demo.webp";
-import videoSeq from "./assets/video_seq.webp";
-import depthAblation from "./assets/depth_head_ablation.webp";
-import supervisionAblation from "./assets/supervision_ablation_demo.webp";
+import benchDemoAppendix from "./assets/bench_demo_appendix.webp";
+import continuousEdit from "./assets/continuous_edit.webp";
 
 <Wide>
   <Figure>
@@ -65,9 +67,34 @@ Achieving physically accurate object manipulation in image editing is essential 
 
 </HighlightedSection>
 
+## Demo
+
+<Wide>
+  <Figure>
+    <Picture slot="figure" src={benchDemo} alt="Qualitative comparison of PhyEdit against baselines on ManipEval" />
+    <Fragment slot="caption">Qualitative comparison on <SmallCaps>ManipEval</SmallCaps>. Top two rows: manipulation accuracy and geometric consistency. Middle two rows: object identity and fine detail preservation. Bottom two rows: multi-object manipulation. Correctly manipulated objects are marked in green; misplaced objects in red.</Fragment>
+  </Figure>
+</Wide>
+
+<Wide>
+  <Figure>
+    <Picture slot="figure" src={benchDemoAppendix} alt="More qualitative results on ManipEval" />
+    <Fragment slot="caption">More qualitative results on <SmallCaps>ManipEval</SmallCaps>. Our method consistently places each object at the correct 2D and depth location, handles occlusions naturally, and preserves fine object details — even in challenging multi-object scenes where strong commercial baselines fall short.</Fragment>
+  </Figure>
+</Wide>
+
+## Continuous Object Manipulation
+
+Beyond single-step editing, <SmallCaps>PhyEdit</SmallCaps> maintains geometric consistency under continuous state transitions. Given an initial state and a spatial trajectory, our model sequentially renders physically accurate keyframes that can be processed by video interpolation models to synthesize a continuous, physically consistent manipulation video. The robotic arm below is out of our training distribution, demonstrating strong generalization.
+
+<Figure>
+  <Picture slot="figure" src={continuousEdit} alt="Continuous object manipulation along a trajectory" />
+  <Fragment slot="caption">Continuous object manipulation along a trajectory. <SmallCaps>PhyEdit</SmallCaps> renders keyframes (solid borders); a video model interpolates intermediate frames (dashed borders).</Fragment>
+</Figure>
+
 ## Method
 
-<SmallCaps>PhyEdit</SmallCaps> combines a DiT editing backbone with a 3D foundation model. The framework consists of three components: (1) a **3D transformation module** that generates a depth-aware preview, (2) the **DiT denoising backbone**, and (3) a **joint training loss** in both 2D latent and 3D depth spaces.
+<SmallCaps>PhyEdit</SmallCaps> combines a DiT editing backbone with a 3D foundation model. The framework has three components: (1) a **3D transformation module** that generates a depth-aware preview, (2) the **DiT denoising backbone**, and (3) a **joint training loss** in both 2D latent and 3D depth spaces.
 
 <Wide>
   <Figure>
@@ -78,19 +105,15 @@ Achieving physically accurate object manipulation in image editing is essential 
 
 ### 3D Transformation Module
 
-Given a source image $I_\text{src}$, object mask $M_o$, and transition vector $\Delta\mathbf{p}_o$, we first predict depth $D$ and camera pose $(R, t)$, then edit the object directly in 3D space:
+Given a source image $I_\text{src}$, object mask $M_o$, and transition vector $\Delta\mathbf{p}_o$, we predict depth $D$ and camera pose $(R, t)$, then edit the object directly in 3D space:
 
 $$
-\mathbf{P}_{o}=\operatorname{Unproj}(I_{\text{src}}, M_{o},D,R,t)
-$$
-$$
-\mathbf{P}_{o}'=\mathbf{P}_{o}+\Delta\mathbf{p}_o
-$$
-$$
+\mathbf{P}_{o}=\operatorname{Unproj}(I_{\text{src}}, M_{o},D,R,t), \quad
+\mathbf{P}_{o}'=\mathbf{P}_{o}+\Delta\mathbf{p}_o, \quad
 I_{\text{prev}}=\operatorname{Proj}(\mathbf{P}'_o,R,t)
 $$
 
-The preview image $I_\text{prev}$ serves as an additional condition for the DiT backbone, providing explicit geometric guidance and naturally supporting multi-object manipulation.
+The preview image $I_\text{prev}$ serves as an additional condition for the DiT backbone, providing explicit geometric guidance and naturally supporting multi-object manipulation without iterative editing.
 
 ### Joint Supervision
 
@@ -100,111 +123,51 @@ $$
 \mathcal{L} = \mathcal{L}_{\text{flow}} + \lambda_d \mathcal{L}_{\text{depth}}
 $$
 
-where $\lambda_d = 0.1$ balances latent and depth supervision. Compared to methods requiring heavy architecture changes to inject 3D priors, our approach only adds lightweight conditioning and training design, making it easy to plug into different DiT-based editors.
+where $\lambda_d = 0.1$ balances latent and depth supervision. This is lightweight and plug-and-play — it can be added to different DiT-based editors with minimal modification.
 
 ## RealManip-10K Dataset
 
-Existing datasets place little emphasis on 3D-aware spatial changes and real-world physical laws. We build <SmallCaps>RealManip-10K</SmallCaps>, a real-world dataset of paired images $(I_\text{src}, I_\text{tgt})$ where objects are manipulated in 3D space—especially along the depth axis. Each pair provides depth maps, object masks, and representative 3D object coordinates.
+We build <SmallCaps>RealManip-10K</SmallCaps>, a real-world dataset of paired images $(I_\text{src}, I_\text{tgt})$ where objects are manipulated in 3D space, especially along the depth axis. Each pair provides depth maps, object masks, and representative 3D object coordinates.
 
 <Wide>
   <Figure>
     <Picture slot="figure" src={datasetSample} alt="Sample image pairs from the RealManip-10K dataset" />
-    <Fragment slot="caption">Samples from RealManip-10K. Objects are annotated with bounding boxes, and 3D coordinates $(x, y, z)$ are given in the camera coordinate system.</Fragment>
+    <Fragment slot="caption">Samples from <SmallCaps>RealManip-10K</SmallCaps>. Objects are annotated with bounding boxes, and 3D coordinates $(x, y, z)$ are given in the camera coordinate system.</Fragment>
   </Figure>
 </Wide>
-
-Key features of the dataset:
-- Each pair contains an object with significant depth change
-- Includes samples with partial occlusion, emphasizing near-far relationships
-- Contains pairs with multiple simultaneously manipulated objects
 
 <Wide>
   <Figure>
     <Picture slot="figure" src={datasetPipeline} alt="The four-stage pipeline used to construct RealManip-10K" />
-    <Fragment slot="caption">Dataset construction pipeline, consisting of four stages: data source filtering, camera-static clip extraction, depth and mask processing, and depth-aware frame pair selection.</Fragment>
+    <Fragment slot="caption">Dataset construction pipeline: data source filtering → camera-static clip extraction → depth and mask processing → depth-aware frame pair selection.</Fragment>
   </Figure>
 </Wide>
 
-The pipeline collects videos from high-resolution sources (OpenVid-1M, VIDGEN-1M, PE-Video-Dataset) and object-tracking datasets (LaSOT, GoT-10K, TrackingNet). A novel **camera token clustering** approach using DBSCAN ensures near-static camera conditions for reliable manipulation supervision.
-
-## ManipEval Benchmark
-
-We design <SmallCaps>ManipEval</SmallCaps> with 200 image pairs (~320 individual objects) covering diverse scenes, object categories, and scales. Metrics span five dimensions:
-
-| Dimension | Metric | Description |
-| :--- | :---: | :--- |
-| 2D Spatial Accuracy | DIoU ↑ / Mask IoU ↑ | Box and mask overlap with ground truth |
-| Depth Accuracy | AbsRel ↓ / δ₁.₂₅ ↑ | Per-pixel depth error on object region |
-| 3D Manipulation Accuracy | Chamfer ↓ / Centroid ↓ | Point cloud distance to ground truth |
-| Image Quality | RA-DINO ↑ / DeQA ↑ | Relocation-aware DINO similarity and perceptual quality |
-| Physical Plausibility | Phys-VLM ↑ | VLM-based assessment of physical realism |
+The pipeline collects videos from OpenVid-1M, VIDGEN-1M, PE-Video-Dataset, and object-tracking datasets (LaSOT, GoT-10K, TrackingNet). A novel **camera token clustering** approach using DBSCAN ensures near-static camera conditions without relying on optical flow or hand-crafted feature matching.
 
 ## Experiments
 
-### Quantitative Results
+### Quantitative Results on ManipEval
 
 | Method | DIoU ↑ | Mask IoU ↑ | AbsRel ↓ | δ₁.₂₅ ↑ | Chamfer ↓ | Centroid ↓ | RA-DINO ↑ | DeQA ↑ | Phys-VLM ↑ |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | GeoDiffuser | 51.72 | 20.10 | 67.64 | 31.40 | 73.41 | 64.56 | 14.78 | 56.72 | 54.62 |
 | DiffusionHandles | 56.22 | 18.88 | 57.36 | 31.73 | 73.00 | 59.65 | 17.08 | 61.83 | 46.90 |
+| Move-and-Act | 46.89 | 10.97 | 68.47 | 29.30 | 64.59 | 63.62 | 13.01 | 60.79 | 60.85 |
+| OBJect 3DIT | 46.63 | 10.18 | 66.93 | 32.75 | 62.30 | 64.14 | 14.31 | 48.01 | 66.65 |
 | GoodDrag | 51.07 | 13.29 | 69.60 | 34.19 | 51.27 | 58.39 | 20.85 | 74.08 | 85.08 |
 | PixelMan | 49.48 | 11.49 | 66.46 | 35.10 | 50.18 | 57.13 | 21.17 | 72.79 | 73.60 |
+| Qwen-Image-Edit | 53.28 | 13.80 | 64.63 | 40.61 | 46.31 | 52.48 | 26.09 | 75.67 | 90.55 |
 | LightningDrag | 53.81 | 18.90 | 57.07 | 35.99 | 45.76 | 53.57 | 21.92 | 73.60 | 88.60 |
+| ChronoEdit | 48.92 | 9.26 | 65.80 | 36.35 | 45.02 | 54.40 | 21.73 | 75.29 | 92.15 |
+| GPT-Image-1.5† | 52.33 | 11.34 | 70.95 | 36.50 | 39.79 | 52.78 | 23.80 | 75.82 | 88.68 |
+| Qwen-Image-2.0-Pro† | 56.48 | 15.60 | 55.93 | 41.39 | 29.64 | 43.48 | 31.04 | 68.26 | 82.91 |
 | Nano Banana Pro† | 59.97 | 18.93 | 55.02 | 46.11 | 25.33 | 35.62 | 34.77 | **77.48** | 91.06 |
 | **Ours** | **65.33** | **27.20** | **49.53** | **51.08** | **18.93** | **32.12** | **36.91** | 75.48 | **93.72** |
 
 † Proprietary commercial model. All metrics normalized to [0, 100].
 
-Our method achieves the **best overall performance** across manipulation-related metrics, including outperforming strong closed-source commercial systems on geometry-sensitive measures. Against Nano Banana Pro, we improve DIoU by **+5.36**, reduce Chamfer distance by **6.40** points, and improve RA-DINO by **+2.14**.
-
-### Qualitative Results
-
-<Wide>
-  <Figure>
-    <Picture slot="figure" src={benchDemo} alt="Qualitative comparison on ManipEval benchmark" />
-    <Fragment slot="caption">Qualitative comparison on ManipEval. Top two rows: manipulation accuracy and geometric consistency. Middle two rows: object identity and fine detail preservation. Bottom two rows: multi-object manipulation. Correctly manipulated objects are marked in green; misplaced objects in red.</Fragment>
-  </Figure>
-</Wide>
-
-### Continuous Object Manipulation
-
-Beyond single-step editing, <SmallCaps>PhyEdit</SmallCaps> maintains geometric consistency under continuous state transitions. Given an initial state and spatial trajectory, our model sequentially renders physically accurate keyframes that can be processed by video interpolation models to synthesize continuous manipulation videos.
-
-<Figure>
-  <Picture slot="figure" src={videoSeq} alt="Continuous object manipulation along a trajectory" />
-  <Fragment slot="caption">Continuous object manipulation along a trajectory. PhyEdit renders keyframes (solid borders); a video model interpolates intermediate frames (dashed borders). The robotic arm is out of training distribution, demonstrating strong generalization.</Fragment>
-</Figure>
-
-### Ablation Studies
-
-**Depth Supervision.** We compare three depth supervision strategies. Pixel-level supervision—decoding the denoised latent and supervising its depth map—consistently outperforms latent-space variants.
-
-<TwoColumns>
-  <Figure slot="left">
-    <Picture slot="figure" src={depthAblation} alt="Architectures of three depth supervision methods" />
-    <Fragment slot="caption">Architectures of the three depth supervision variants. The key difference is highlighted in red.</Fragment>
-  </Figure>
-  <Figure slot="right">
-    <Picture slot="figure" src={supervisionAblation} alt="Qualitative comparison with and without depth supervision" />
-    <Fragment slot="caption">With pixel-level depth supervision, a very small target object (smaller than one patch) is correctly generated; without it, only a blurry trace appears.</Fragment>
-  </Figure>
-</TwoColumns>
-
-| Method | DIoU ↑ | AbsRel ↓ | Chamfer ↓ | RA-DINO ↑ |
-| :--- | :---: | :---: | :---: | :---: |
-| w/o Supervision | 62.37 | 50.92 | 24.52 | 33.53 |
-| Latent-to-Latent | 60.48 | 49.78 | 28.61 | 32.29 |
-| Latent-to-Depth | 64.19 | 49.73 | 20.87 | 35.93 |
-| **Ours (pixel-level)** | **65.33** | **49.53** | **18.93** | **36.91** |
-
-**Reference Image.** Providing a 3D-transformed reference image is critical. Without reference, training only reduces Chamfer from 55.38 to 52.93 (−2.45). With reference, training reduces Chamfer from 46.31 to 18.93 (−27.38), a dramatically larger improvement.
-
-| Reference | Training | DIoU ↑ | AbsRel ↓ | Chamfer ↓ | RA-DINO ↑ |
-| :---: | :---: | :---: | :---: | :---: | :---: |
-| ✗ | ✗ | 45.58 | 68.22 | 55.38 | 18.85 |
-| ✗ | ✓ | 46.16 | 67.99 | 52.93 | 18.87 |
-| ✓ | ✗ | 53.28 | 64.63 | 46.31 | 26.09 |
-| ✓ | ✓ | **65.33** | **49.53** | **18.93** | **36.91** |
+Our method achieves the **best overall performance** across manipulation-related metrics, outperforming strong closed-source commercial systems on geometry-sensitive measures. Against Nano Banana Pro: DIoU **+5.36**, Chamfer distance **−6.40**, RA-DINO **+2.14**. Our lead over commercial baselines grows further on multi-object scenes (Chamfer gap: 5.19 → 6.58; δ₁.₂₅ gap: 1.91 → 8.02).
 
 ## BibTeX
 
