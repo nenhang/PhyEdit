@@ -1,205 +1,222 @@
 ---
-title: Academic Project Page Template
+title: "PhyEdit: Towards Real-World Object Manipulation via Physically-Grounded Image Editing"
 authors:
-  - name: Roman Hauksson
-    url: https://roman.technology
-    institution: University of Texas at Dallas
-    notes: ["*", †]
-  - name: Author Two
-    institution: Institution Two
-    notes: ["*", †]
-  - name: Author Three
-    institution: Institution Three
-    notes: ["*"]
-  - name: Author Four
-    institution: Institution Four
-conference: Conference Name
-notes:
-  - symbol: "*"
-    text: author note one
-  - symbol: †
-    text: author note two
+  - name: Ruihang Xu
+    url: https://scholar.google.com/citations?user=5ZDU6wwAAAAJ
+    institution: Zhejiang University
+  - name: Dewei Zhou
+    url: https://scholar.google.com/citations?user=4C_OwWMAAAAJ
+    institution: Zhejiang University
+  - name: Xiaolong Shen
+    url: https://scholar.google.com/citations?user=vAMMc8EAAAAJ
+    institution: Zhejiang University
+  - name: Fan Ma
+    url: https://scholar.google.com/citations?user=FyglsaAAAAAJ
+    institution: Zhejiang University
+  - name: Yi Yang
+    url: https://scholar.google.com/citations?user=RMSuNFwAAAAJ
+    institution: Zhejiang University
+conference: ACM MM 2026
 links:
   - name: Paper
-    url: https://github.com/RomanHauksson/academic-project-astro-template
+    url: https://arxiv.org/abs/2604.07230
     icon: ri:file-pdf-2-line
-  - name: Code
-    url: https://github.com/RomanHauksson/academic-project-astro-template
-    icon: ri:github-line
   - name: arXiv
-    url: https://github.com/RomanHauksson/academic-project-astro-template
+    url: https://arxiv.org/abs/2604.07230
     icon: academicons:arxiv
-  - name: Slides
-    url: https://github.com/RomanHauksson/academic-project-astro-template
-    icon: ri:slideshow-2-line
+  - name: Code
+    url: https://github.com/nenhang/PhyEdit
+    icon: ri:github-line
 
-# The color theme of the page. Defaults to "device" (the preference set in the user's brower or operating system). Setting this to "light" or "dark" will override the user's preference. This is useful if your figures only look good in one theme.
 theme: device
-
-# This is the icon that appears in the user's browser tab. To customize, change the favicon.svg file in /public/, or add your own file to /public/ and change the filename here.
 favicon: favicon.svg
-
-# These keys are optional. If a link to your project page is in a Google search result, text message, or social media post, it will often appear as a "link preview card" based on its title, description, favicon, and thumbnail. After you publish your page, you can double check that these previews look right using [this tool](https://linkpreview.xyz/)
-description: Simple project page template for your research paper, built with Astro and Tailwind
+description: PhyEdit is a framework for physically-grounded image editing that enables 3D-aware object relocation and manipulation.
 thumbnail: screenshot-light.png
 ---
 
-import Video from "./components/Video.astro";
 import HighlightedSection from "./components/HighlightedSection.astro";
 import SmallCaps from "./components/SmallCaps.astro";
 import Figure from "./components/Figure.astro";
 import Picture from "./components/Picture.astro";
-import ModelViewer from "./components/ModelViewer.astro"
 import TwoColumns from "./components/TwoColumns.astro";
-import YouTubeVideo from "./components/YouTubeVideo.astro";
-import Carousel from "./components/Carousel.astro";
-import CarouselSlide from "./components/CarouselSlide.astro";
 import Wide from "./components/Wide.astro";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/starwind/tabs";
-import { Comparison } from "./components/Comparison.tsx";
 
-import outside from "./assets/outside.mp4";
-import dogsDiffc from "./assets/dogs-diffc.png"
-import dogsTrue from "./assets/dogs-true.png"
-import dogsMsillm from "@/assets/dogs-msillm.jpg"
+import teaser from "./assets/teaser.webp";
+import modelOverview from "./assets/model_overview.webp";
+import datasetSample from "./assets/dataset_sample.webp";
+import datasetPipeline from "./assets/dataset_contruction_pipeline.webp";
+import benchDemo from "./assets/bench_demo.webp";
+import videoSeq from "./assets/video_seq.webp";
+import depthAblation from "./assets/depth_head_ablation.webp";
+import supervisionAblation from "./assets/supervision_ablation_demo.webp";
 
-<Video src={outside} />
+<Wide>
+  <Figure>
+    <Picture slot="figure" src={teaser} alt="Comparison of PhyEdit editing results against Nano Banana Pro across three physical scenarios" />
+    <Fragment slot="caption">Comparison of image editing results on three physical scenarios between PhyEdit and Nano Banana Pro. PhyEdit achieves more accurate object placement and geometric consistency.</Fragment>
+  </Figure>
+</Wide>
 
 <HighlightedSection>
 
 ## Abstract
 
-This is a template you can use to create a professional project page for your research paper. [See the code for the template and instructions on how to use it yourself on GitHub](https://github.com/RomanHauksson/academic-project-astro-template). It's made with the [Astro web framework](https://astro.build/) and styled with [Tailwind](https://tailwindcss.com/). You write the content in [MDX](https://mdxjs.com/), which enables markdown formatting like **bold**, _italics_, and ~strikethrough~, as well as custom components like <SmallCaps>small caps.</SmallCaps>
+Achieving physically accurate object manipulation in image editing is essential for its potential applications in interactive world models. However, existing visual generative models often fail at precise spatial manipulation, resulting in incorrect scaling and positioning of objects. This limitation primarily stems from the lack of explicit mechanisms to incorporate 3D geometry and perspective projection. To achieve accurate manipulation, we develop <SmallCaps>PhyEdit</SmallCaps>, an image editing framework that leverages explicit geometric simulation as contextual 3D-aware visual guidance. By combining this plug-and-play 3D prior with joint 2D–3D supervision, our method effectively improves physical accuracy and manipulation consistency. To support this method and evaluate performance, we present a real-world dataset, <SmallCaps>RealManip-10K</SmallCaps>, for 3D-aware object manipulation featuring paired images and depth annotations. We also propose <SmallCaps>ManipEval</SmallCaps>, a benchmark with multi-dimensional metrics to evaluate 3D spatial control and geometric consistency. Extensive experiments show that our approach outperforms existing methods, including strong closed-source models, in both 3D geometric accuracy and manipulation consistency.
 
 </HighlightedSection>
 
-## Visuals
+## Method
 
-### Picture
-
-Use the `Picture` component to display images. If you have a figure in PDF format, you can pass in its path as the `src` prop and it will be converted into a web-friendly image automatically.
-
-<Picture src={dogsDiffc} alt="Photo of two running dogs, lossily compressed using the DiffC algorithm" />
-
-### Wide visual
-
-I constrained the maximum width of the text column to make sure it's readable even when the screen is wide. But images and other visuals should "break out" and take up more horizontal space: for this, try wrapping them in the `Wide` component.
+<SmallCaps>PhyEdit</SmallCaps> combines a DiT editing backbone with a 3D foundation model. The framework consists of three components: (1) a **3D transformation module** that generates a depth-aware preview, (2) the **DiT denoising backbone**, and (3) a **joint training loss** in both 2D latent and 3D depth spaces.
 
 <Wide>
-  <Picture src={dogsDiffc} alt="Photo of two running dogs, lossily compressed using the DiffC algorithm" />
+  <Figure>
+    <Picture slot="figure" src={modelOverview} alt="Overview of the PhyEdit model architecture" />
+    <Fragment slot="caption">Overview of PhyEdit. User and GT inputs are first processed via the 3D transformation module. The resulting conditions are fed into the backbone for the training forward pass, followed by joint 2D and 3D supervision.</Fragment>
+  </Figure>
 </Wide>
 
-### Figure with caption
+### 3D Transformation Module
 
-Wrap a visual in a `Figure` component to add a caption.
+Given a source image $I_\text{src}$, object mask $M_o$, and transition vector $\Delta\mathbf{p}_o$, we first predict depth $D$ and camera pose $(R, t)$, then edit the object directly in 3D space:
+
+$$
+\mathbf{P}_{o}=\operatorname{Unproj}(I_{\text{src}}, M_{o},D,R,t)
+$$
+$$
+\mathbf{P}_{o}'=\mathbf{P}_{o}+\Delta\mathbf{p}_o
+$$
+$$
+I_{\text{prev}}=\operatorname{Proj}(\mathbf{P}'_o,R,t)
+$$
+
+The preview image $I_\text{prev}$ serves as an additional condition for the DiT backbone, providing explicit geometric guidance and naturally supporting multi-object manipulation.
+
+### Joint Supervision
+
+Latent-space denoising loss alone is insufficient for 3D manipulation, as it emphasizes appearance reconstruction over geometric correctness. We add a depth-space supervision term using the scale-invariant logarithmic (SILog) loss:
+
+$$
+\mathcal{L} = \mathcal{L}_{\text{flow}} + \lambda_d \mathcal{L}_{\text{depth}}
+$$
+
+where $\lambda_d = 0.1$ balances latent and depth supervision. Compared to methods requiring heavy architecture changes to inject 3D priors, our approach only adds lightweight conditioning and training design, making it easy to plug into different DiT-based editors.
+
+## RealManip-10K Dataset
+
+Existing datasets place little emphasis on 3D-aware spatial changes and real-world physical laws. We build <SmallCaps>RealManip-10K</SmallCaps>, a real-world dataset of paired images $(I_\text{src}, I_\text{tgt})$ where objects are manipulated in 3D space—especially along the depth axis. Each pair provides depth maps, object masks, and representative 3D object coordinates.
+
+<Wide>
+  <Figure>
+    <Picture slot="figure" src={datasetSample} alt="Sample image pairs from the RealManip-10K dataset" />
+    <Fragment slot="caption">Samples from RealManip-10K. Objects are annotated with bounding boxes, and 3D coordinates $(x, y, z)$ are given in the camera coordinate system.</Fragment>
+  </Figure>
+</Wide>
+
+Key features of the dataset:
+- Each pair contains an object with significant depth change
+- Includes samples with partial occlusion, emphasizing near-far relationships
+- Contains pairs with multiple simultaneously manipulated objects
+
+<Wide>
+  <Figure>
+    <Picture slot="figure" src={datasetPipeline} alt="The four-stage pipeline used to construct RealManip-10K" />
+    <Fragment slot="caption">Dataset construction pipeline, consisting of four stages: data source filtering, camera-static clip extraction, depth and mask processing, and depth-aware frame pair selection.</Fragment>
+  </Figure>
+</Wide>
+
+The pipeline collects videos from high-resolution sources (OpenVid-1M, VIDGEN-1M, PE-Video-Dataset) and object-tracking datasets (LaSOT, GoT-10K, TrackingNet). A novel **camera token clustering** approach using DBSCAN ensures near-static camera conditions for reliable manipulation supervision.
+
+## ManipEval Benchmark
+
+We design <SmallCaps>ManipEval</SmallCaps> with 200 image pairs (~320 individual objects) covering diverse scenes, object categories, and scales. Metrics span five dimensions:
+
+| Dimension | Metric | Description |
+| :--- | :---: | :--- |
+| 2D Spatial Accuracy | DIoU ↑ / Mask IoU ↑ | Box and mask overlap with ground truth |
+| Depth Accuracy | AbsRel ↓ / δ₁.₂₅ ↑ | Per-pixel depth error on object region |
+| 3D Manipulation Accuracy | Chamfer ↓ / Centroid ↓ | Point cloud distance to ground truth |
+| Image Quality | RA-DINO ↑ / DeQA ↑ | Relocation-aware DINO similarity and perceptual quality |
+| Physical Plausibility | Phys-VLM ↑ | VLM-based assessment of physical realism |
+
+## Experiments
+
+### Quantitative Results
+
+| Method | DIoU ↑ | Mask IoU ↑ | AbsRel ↓ | δ₁.₂₅ ↑ | Chamfer ↓ | Centroid ↓ | RA-DINO ↑ | DeQA ↑ | Phys-VLM ↑ |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| GeoDiffuser | 51.72 | 20.10 | 67.64 | 31.40 | 73.41 | 64.56 | 14.78 | 56.72 | 54.62 |
+| DiffusionHandles | 56.22 | 18.88 | 57.36 | 31.73 | 73.00 | 59.65 | 17.08 | 61.83 | 46.90 |
+| GoodDrag | 51.07 | 13.29 | 69.60 | 34.19 | 51.27 | 58.39 | 20.85 | 74.08 | 85.08 |
+| PixelMan | 49.48 | 11.49 | 66.46 | 35.10 | 50.18 | 57.13 | 21.17 | 72.79 | 73.60 |
+| LightningDrag | 53.81 | 18.90 | 57.07 | 35.99 | 45.76 | 53.57 | 21.92 | 73.60 | 88.60 |
+| Nano Banana Pro† | 59.97 | 18.93 | 55.02 | 46.11 | 25.33 | 35.62 | 34.77 | **77.48** | 91.06 |
+| **Ours** | **65.33** | **27.20** | **49.53** | **51.08** | **18.93** | **32.12** | **36.91** | 75.48 | **93.72** |
+
+† Proprietary commercial model. All metrics normalized to [0, 100].
+
+Our method achieves the **best overall performance** across manipulation-related metrics, including outperforming strong closed-source commercial systems on geometry-sensitive measures. Against Nano Banana Pro, we improve DIoU by **+5.36**, reduce Chamfer distance by **6.40** points, and improve RA-DINO by **+2.14**.
+
+### Qualitative Results
+
+<Wide>
+  <Figure>
+    <Picture slot="figure" src={benchDemo} alt="Qualitative comparison on ManipEval benchmark" />
+    <Fragment slot="caption">Qualitative comparison on ManipEval. Top two rows: manipulation accuracy and geometric consistency. Middle two rows: object identity and fine detail preservation. Bottom two rows: multi-object manipulation. Correctly manipulated objects are marked in green; misplaced objects in red.</Fragment>
+  </Figure>
+</Wide>
+
+### Continuous Object Manipulation
+
+Beyond single-step editing, <SmallCaps>PhyEdit</SmallCaps> maintains geometric consistency under continuous state transitions. Given an initial state and spatial trajectory, our model sequentially renders physically accurate keyframes that can be processed by video interpolation models to synthesize continuous manipulation videos.
 
 <Figure>
-  <Picture slot="figure" src={dogsDiffc} alt="Photo of two running dogs, lossily compressed using the DiffC algorithm" />
-  <Fragment slot="caption">A photo of two dogs running side-by-side in shallow water, lossily compressed using the [DiffC algorithm](https://jeremyiv.github.io/diffc-project-page/).</Fragment>
+  <Picture slot="figure" src={videoSeq} alt="Continuous object manipulation along a trajectory" />
+  <Fragment slot="caption">Continuous object manipulation along a trajectory. PhyEdit renders keyframes (solid borders); a video model interpolates intermediate frames (dashed borders). The robotic arm is out of training distribution, demonstrating strong generalization.</Fragment>
 </Figure>
 
-### Comparison slider
+### Ablation Studies
 
-Use the `Comparison` component to compare two visuals with an interactive slider.
-
-<Comparison client:idle >
-  <Picture slot="itemOne" src={dogsDiffc} alt="Photo of two running dogs, lossily compressed using the DiffC algorithm" />
-  <Picture slot="itemTwo" src={dogsTrue} alt="True photo of two dogs running side-by-side in shallow water" />
-</Comparison>
-
-### Tab panels
-
-Tab panels are a great way to display a labeled collection of related visuals without taking up too much space.
-
-<Tabs defaultValue="true">
-  <TabsList>
-    <TabsTrigger value="true">Ground truth</TabsTrigger>
-    <TabsTrigger value="diffc">DiffC (Flux-dev)</TabsTrigger>
-    <TabsTrigger value="msillm">MS-ILLM</TabsTrigger>
-  </TabsList>
-  <TabsContent value="true">
-    <Picture
-      src={dogsTrue}
-      alt="True photo of two dogs running side-by-side in shallow water"
-    />
-  </TabsContent>
-  <TabsContent value="diffc">
-    <Picture
-      src={dogsDiffc}
-      alt="Photo of two running dogs, lossily compressed using the DiffC algorithm"
-    />
-  </TabsContent>
-  <TabsContent value="msillm">
-    <Picture
-      src={dogsMsillm}
-      alt="Photo of two running dogs, lossily compressed using MS-ILLM"
-    />
-  </TabsContent>
-</Tabs>
-
-### Carousel
-
-A carousel is another useful pattern for a collection of visuals that don't necessarily have meaningful labels.
-
-<Carousel>
-  <CarouselSlide>
-    <Picture src={dogsTrue} alt="True photo of two dogs running side-by-side in shallow water" />
-  </CarouselSlide>
-  <CarouselSlide>
-    <Picture src={dogsDiffc} alt="Photo of two running dogs, lossily compressed using the DiffC algorithm" />
-  </CarouselSlide>
-  <CarouselSlide>
-    <Picture
-      src={dogsMsillm}
-      alt="Photo of two running dogs, lossily compressed using MS-ILLM"
-    />
-  </CarouselSlide>
-</Carousel>
-
-## Two columns
-
-Use the two columns component to display two columns of content. In this example, the first column contains a YouTube video embed and the second column contains an interactive 3D model viewer. By default, they display side by side, but if the screen is narrow enough (for example, on mobile), they're arranged vertically.
+**Depth Supervision.** We compare three depth supervision strategies. Pixel-level supervision—decoding the denoised latent and supervising its depth map—consistently outperforms latent-space variants.
 
 <TwoColumns>
-  <YouTubeVideo slot="left" videoId="wjZofJX0v4M" />
-  <ModelViewer slot="right" src="/BoxVertexColors.glb" alt="A cube colored with a rainbow gradient" />
+  <Figure slot="left">
+    <Picture slot="figure" src={depthAblation} alt="Architectures of three depth supervision methods" />
+    <Fragment slot="caption">Architectures of the three depth supervision variants. The key difference is highlighted in red.</Fragment>
+  </Figure>
+  <Figure slot="right">
+    <Picture slot="figure" src={supervisionAblation} alt="Qualitative comparison with and without depth supervision" />
+    <Fragment slot="caption">With pixel-level depth supervision, a very small target object (smaller than one patch) is correctly generated; without it, only a blurry trace appears.</Fragment>
+  </Figure>
 </TwoColumns>
 
-## $\LaTeX$
+| Method | DIoU ↑ | AbsRel ↓ | Chamfer ↓ | RA-DINO ↑ |
+| :--- | :---: | :---: | :---: | :---: |
+| w/o Supervision | 62.37 | 50.92 | 24.52 | 33.53 |
+| Latent-to-Latent | 60.48 | 49.78 | 28.61 | 32.29 |
+| Latent-to-Depth | 64.19 | 49.73 | 20.87 | 35.93 |
+| **Ours (pixel-level)** | **65.33** | **49.53** | **18.93** | **36.91** |
 
-You can also add $\LaTeX$ formulas, rendered during the build process using [$\KaTeX$](https://katex.org/) so they're quick to load for visitors of your project page. You can write them inline, like this: $a^2 + b^2 = c^2$. Or, you can write them as a block:
+**Reference Image.** Providing a 3D-transformed reference image is critical. Without reference, training only reduces Chamfer from 55.38 to 52.93 (−2.45). With reference, training reduces Chamfer from 46.31 to 18.93 (−27.38), a dramatically larger improvement.
 
-$$
-\int_a^b f(x) dx
-$$
+| Reference | Training | DIoU ↑ | AbsRel ↓ | Chamfer ↓ | RA-DINO ↑ |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| ✗ | ✗ | 45.58 | 68.22 | 55.38 | 18.85 |
+| ✗ | ✓ | 46.16 | 67.99 | 52.93 | 18.87 |
+| ✓ | ✗ | 53.28 | 64.63 | 46.31 | 26.09 |
+| ✓ | ✓ | **65.33** | **49.53** | **18.93** | **36.91** |
 
-## Citation
-
-If you copy your bibliography into `./bibliography.bib`, you can cite papers using their BibTeX keys, and they'll be automatically formatted and included in the bibliography section at the end. For example: [@vaswani2017attention]. Note that these citations are distinct from footnotes[^mynote], which show up in a separate section if you use them.
-
-[^mynote]: On the web, they should really be called "endnotes", since each page constitutes a full document.
-
-## Table
-
-Add simple tables using [GitHub Flavored Markdown syntax](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/organizing-information-with-tables):
-
-| Model | Accuracy | F1 score | Training time (hours) |
-| :--- | :---: | :---: | :---: |
-| BERT-base | 0.89 | 0.87 | 4.5 |
-| RoBERTa-large | 0.92 | 0.91 | 7.2 |
-| DistilBERT | 0.86 | 0.84 | 2.1 |
-| XLNet | 0.90 | 0.89 | 6.8 |
-
-## BibTeX citation
-
-Displaying the BibTeX entry for your paper in a code block makes it easy to copy and paste.
+## BibTeX
 
 ```bibtex
-@misc{roman2024academic,
-  author = "{Roman Hauksson}",
-  title = "Academic Project Page Template",
-  year = "2024",
-  howpublished = "\url{https://research-template.roman.technology}",
+@misc{xu2026phyeditrealworldobjectmanipulation,
+  title={PhyEdit: Towards Real-World Object Manipulation via Physically-Grounded Image Editing},
+  author={Ruihang Xu and Dewei Zhou and Xiaolong Shen and Fan Ma and Yi Yang},
+  year={2026},
+  eprint={2604.07230},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2604.07230},
 }
 ```
 
