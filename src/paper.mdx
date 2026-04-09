@@ -42,6 +42,7 @@ import Wide from "./components/Wide.astro";
 import Carousel from "./components/Carousel.astro";
 import CarouselSlide from "./components/CarouselSlide.astro";
 import TwoColumns from "./components/TwoColumns.astro";
+import DemoCard from "./components/DemoCard.astro";
 {/* import ModelViewer from "./components/ModelViewer.astro" */}
 
 import teaser from "./assets/teaser.webp";
@@ -51,6 +52,107 @@ import datasetPipeline from "./assets/dataset_contruction_pipeline.webp";
 import benchDemo from "./assets/bench_demo.webp";
 import benchDemoAppendix from "./assets/bench_demo_appendix.webp";
 import continuousEdit from "./assets/continuous_edit.webp";
+
+{/* Demo images — replace placeholder with real webp once ready */}
+import placeholder from "./assets/dogs-diffc.png";
+
+import demo01src from "./assets/demos/01/src.webp";
+import demo01gt from "./assets/demos/01/gt.webp";
+import demo013d from "./assets/demos/01/3d.webp";
+import demo01ours from "./assets/demos/01/ours.webp";
+import demo01qwen from "./assets/demos/01/qwen.webp";
+import demo01nano from "./assets/demos/01/nano_banana.webp";
+
+import demo02src from "./assets/demos/02/src.webp";
+import demo02gt from "./assets/demos/02/gt.webp";
+import demo023d from "./assets/demos/02/3d.webp";
+import demo02ours from "./assets/demos/02/ours.webp";
+import demo02qwen from "./assets/demos/02/qwen.webp";
+import demo02nano from "./assets/demos/02/nano_banana.webp";
+
+import demo03src from "./assets/demos/03/src.webp";
+import demo03gt from "./assets/demos/03/gt.webp";
+import demo033d from "./assets/demos/03/3d.webp";
+import demo03ours from "./assets/demos/03/ours.webp";
+import demo03qwen from "./assets/demos/03/qwen.webp";
+import demo03nano from "./assets/demos/03/nano_banana.webp";
+
+import demo04src from "./assets/demos/04/src.webp";
+import demo04gt from "./assets/demos/04/gt.webp";
+import demo043d from "./assets/demos/04/3d.webp";
+import demo04ours from "./assets/demos/04/ours.webp";
+import demo04qwen from "./assets/demos/04/qwen.webp";
+import demo04nano from "./assets/demos/04/nano_banana.webp";
+
+import demo05src from "./assets/demos/05/src.webp";
+import demo05gt from "./assets/demos/05/gt.webp";
+import demo053d from "./assets/demos/05/3d.webp";
+import demo05ours from "./assets/demos/05/ours.webp";
+import demo05qwen from "./assets/demos/05/qwen.webp";
+import demo05nano from "./assets/demos/05/nano_banana.webp";
+
+import demo06src from "./assets/demos/06/src.webp";
+import demo06gt from "./assets/demos/06/gt.webp";
+import demo063d from "./assets/demos/06/3d.webp";
+import demo06ours from "./assets/demos/06/ours.webp";
+import demo06qwen from "./assets/demos/06/qwen.webp";
+import demo06nano from "./assets/demos/06/nano_banana.webp";
+
+import demo07src from "./assets/demos/07/src.webp";
+import demo07gt from "./assets/demos/07/gt.webp";
+import demo073d from "./assets/demos/07/3d.webp";
+import demo07ours from "./assets/demos/07/ours.webp";
+import demo07qwen from "./assets/demos/07/qwen.webp";
+import demo07nano from "./assets/demos/07/nano_banana.webp";
+
+import demo08src from "./assets/demos/08/src.webp";
+import demo08gt from "./assets/demos/08/gt.webp";
+import demo083d from "./assets/demos/08/3d.webp";
+import demo08ours from "./assets/demos/08/ours.webp";
+import demo08qwen from "./assets/demos/08/qwen.webp";
+import demo08nano from "./assets/demos/08/nano_banana.webp";
+
+import demo09src from "./assets/demos/09/src.webp";
+import demo09gt from "./assets/demos/09/gt.webp";
+import demo093d from "./assets/demos/09/3d.webp";
+import demo09ours from "./assets/demos/09/ours.webp";
+import demo09qwen from "./assets/demos/09/qwen.webp";
+import demo09nano from "./assets/demos/09/nano_banana.webp";
+
+import demo10src from "./assets/demos/10/src.webp";
+import demo10gt from "./assets/demos/10/gt.webp";
+import demo103d from "./assets/demos/10/3d.webp";
+import demo10ours from "./assets/demos/10/ours.webp";
+import demo10qwen from "./assets/demos/10/qwen.webp";
+import demo10nano from "./assets/demos/10/nano_banana.webp";
+
+import demo11src from "./assets/demos/11/src.webp";
+import demo11gt from "./assets/demos/11/gt.webp";
+import demo113d from "./assets/demos/11/3d.webp";
+import demo11ours from "./assets/demos/11/ours.webp";
+import demo11qwen from "./assets/demos/11/qwen.webp";
+import demo11nano from "./assets/demos/11/nano_banana.webp";
+
+import demo12src from "./assets/demos/12/src.webp";
+import demo12gt from "./assets/demos/12/gt.webp";
+import demo123d from "./assets/demos/12/3d.webp";
+import demo12ours from "./assets/demos/12/ours.webp";
+import demo12qwen from "./assets/demos/12/qwen.webp";
+import demo12nano from "./assets/demos/12/nano_banana.webp";
+
+import demo13src from "./assets/demos/13/src.webp";
+import demo13gt from "./assets/demos/13/gt.webp";
+import demo133d from "./assets/demos/13/3d.webp";
+import demo13ours from "./assets/demos/13/ours.webp";
+import demo13qwen from "./assets/demos/13/qwen.webp";
+import demo13nano from "./assets/demos/13/nano_banana.webp";
+
+import demo14src from "./assets/demos/14/src.webp";
+import demo14gt from "./assets/demos/14/gt.webp";
+import demo143d from "./assets/demos/14/3d.webp";
+import demo14ours from "./assets/demos/14/ours.webp";
+import demo14qwen from "./assets/demos/14/qwen.webp";
+import demo14nano from "./assets/demos/14/nano_banana.webp";
 
 <Wide>
   <Figure>
@@ -69,19 +171,148 @@ Achieving physically accurate object manipulation in image editing is essential 
 
 ## Demo
 
-<Wide>
-  <Figure>
-    <Picture slot="figure" src={benchDemo} alt="Qualitative comparison of PhyEdit against baselines on ManipEval" />
-    <Fragment slot="caption">Qualitative comparison on <SmallCaps>ManipEval</SmallCaps>. Top two rows: manipulation accuracy and geometric consistency. Middle two rows: object identity and fine detail preservation. Bottom two rows: multi-object manipulation. Correctly manipulated objects are marked in green; misplaced objects in red.</Fragment>
-  </Figure>
-</Wide>
-
-<Wide>
-  <Figure>
-    <Picture slot="figure" src={benchDemoAppendix} alt="More qualitative results on ManipEval" />
-    <Fragment slot="caption">More qualitative results on <SmallCaps>ManipEval</SmallCaps>. Our method consistently places each object at the correct 2D and depth location, handles occlusions naturally, and preserves fine object details — even in challenging multi-object scenes where strong commercial baselines fall short.</Fragment>
-  </Figure>
-</Wide>
+<Carousel>
+  <CarouselSlide>
+    <DemoCard index={1}
+      src={{ src: demo01src, alt: "Demo 1 source image" }}
+      gt={{ src: demo01gt, alt: "Demo 1 ground truth" }}
+      view3d={{ src: demo013d, alt: "Demo 1 3D view" }}
+      ours={{ src: demo01ours, alt: "Demo 1 our result" }}
+      qwen={{ src: demo01qwen, alt: "Demo 1 Qwen result" }}
+      nanoBanana={{ src: demo01nano, alt: "Demo 1 Nano Banana Pro result" }}
+    />
+  </CarouselSlide>
+  <CarouselSlide>
+    <DemoCard index={2}
+      src={{ src: demo02src, alt: "Demo 2 source image" }}
+      gt={{ src: demo02gt, alt: "Demo 2 ground truth" }}
+      view3d={{ src: demo023d, alt: "Demo 2 3D view" }}
+      ours={{ src: demo02ours, alt: "Demo 2 our result" }}
+      qwen={{ src: demo02qwen, alt: "Demo 2 Qwen result" }}
+      nanoBanana={{ src: demo02nano, alt: "Demo 2 Nano Banana Pro result" }}
+    />
+  </CarouselSlide>
+  <CarouselSlide>
+    <DemoCard index={3}
+      src={{ src: demo03src, alt: "Demo 3 source image" }}
+      gt={{ src: demo03gt, alt: "Demo 3 ground truth" }}
+      view3d={{ src: demo033d, alt: "Demo 3 3D view" }}
+      ours={{ src: demo03ours, alt: "Demo 3 our result" }}
+      qwen={{ src: demo03qwen, alt: "Demo 3 Qwen result" }}
+      nanoBanana={{ src: demo03nano, alt: "Demo 3 Nano Banana Pro result" }}
+    />
+  </CarouselSlide>
+  <CarouselSlide>
+    <DemoCard index={4}
+      src={{ src: demo04src, alt: "Demo 4 source image" }}
+      gt={{ src: demo04gt, alt: "Demo 4 ground truth" }}
+      view3d={{ src: demo043d, alt: "Demo 4 3D view" }}
+      ours={{ src: demo04ours, alt: "Demo 4 our result" }}
+      qwen={{ src: demo04qwen, alt: "Demo 4 Qwen result" }}
+      nanoBanana={{ src: demo04nano, alt: "Demo 4 Nano Banana Pro result" }}
+    />
+  </CarouselSlide>
+  <CarouselSlide>
+    <DemoCard index={5}
+      src={{ src: demo05src, alt: "Demo 5 source image" }}
+      gt={{ src: demo05gt, alt: "Demo 5 ground truth" }}
+      view3d={{ src: demo053d, alt: "Demo 5 3D view" }}
+      ours={{ src: demo05ours, alt: "Demo 5 our result" }}
+      qwen={{ src: demo05qwen, alt: "Demo 5 Qwen result" }}
+      nanoBanana={{ src: demo05nano, alt: "Demo 5 Nano Banana Pro result" }}
+    />
+  </CarouselSlide>
+  <CarouselSlide>
+    <DemoCard index={6}
+      src={{ src: demo06src, alt: "Demo 6 source image" }}
+      gt={{ src: demo06gt, alt: "Demo 6 ground truth" }}
+      view3d={{ src: demo063d, alt: "Demo 6 3D view" }}
+      ours={{ src: demo06ours, alt: "Demo 6 our result" }}
+      qwen={{ src: demo06qwen, alt: "Demo 6 Qwen result" }}
+      nanoBanana={{ src: demo06nano, alt: "Demo 6 Nano Banana Pro result" }}
+    />
+  </CarouselSlide>
+  <CarouselSlide>
+    <DemoCard index={7}
+      src={{ src: demo07src, alt: "Demo 7 source image" }}
+      gt={{ src: demo07gt, alt: "Demo 7 ground truth" }}
+      view3d={{ src: demo073d, alt: "Demo 7 3D view" }}
+      ours={{ src: demo07ours, alt: "Demo 7 our result" }}
+      qwen={{ src: demo07qwen, alt: "Demo 7 Qwen result" }}
+      nanoBanana={{ src: demo07nano, alt: "Demo 7 Nano Banana Pro result" }}
+    />
+  </CarouselSlide>
+  <CarouselSlide>
+    <DemoCard index={8}
+      src={{ src: demo08src, alt: "Demo 8 source image" }}
+      gt={{ src: demo08gt, alt: "Demo 8 ground truth" }}
+      view3d={{ src: demo083d, alt: "Demo 8 3D view" }}
+      ours={{ src: demo08ours, alt: "Demo 8 our result" }}
+      qwen={{ src: demo08qwen, alt: "Demo 8 Qwen result" }}
+      nanoBanana={{ src: demo08nano, alt: "Demo 8 Nano Banana Pro result" }}
+    />
+  </CarouselSlide>
+  <CarouselSlide>
+    <DemoCard index={9}
+      src={{ src: demo09src, alt: "Demo 9 source image" }}
+      gt={{ src: demo09gt, alt: "Demo 9 ground truth" }}
+      view3d={{ src: demo093d, alt: "Demo 9 3D view" }}
+      ours={{ src: demo09ours, alt: "Demo 9 our result" }}
+      qwen={{ src: demo09qwen, alt: "Demo 9 Qwen result" }}
+      nanoBanana={{ src: demo09nano, alt: "Demo 9 Nano Banana Pro result" }}
+    />
+  </CarouselSlide>
+  <CarouselSlide>
+    <DemoCard index={10}
+      src={{ src: demo10src, alt: "Demo 10 source image" }}
+      gt={{ src: demo10gt, alt: "Demo 10 ground truth" }}
+      view3d={{ src: demo103d, alt: "Demo 10 3D view" }}
+      ours={{ src: demo10ours, alt: "Demo 10 our result" }}
+      qwen={{ src: demo10qwen, alt: "Demo 10 Qwen result" }}
+      nanoBanana={{ src: demo10nano, alt: "Demo 10 Nano Banana Pro result" }}
+    />
+  </CarouselSlide>
+  <CarouselSlide>
+    <DemoCard index={11}
+      src={{ src: demo11src, alt: "Demo 11 source image" }}
+      gt={{ src: demo11gt, alt: "Demo 11 ground truth" }}
+      view3d={{ src: demo113d, alt: "Demo 11 3D view" }}
+      ours={{ src: demo11ours, alt: "Demo 11 our result" }}
+      qwen={{ src: demo11qwen, alt: "Demo 11 Qwen result" }}
+      nanoBanana={{ src: demo11nano, alt: "Demo 11 Nano Banana Pro result" }}
+    />
+  </CarouselSlide>
+  <CarouselSlide>
+    <DemoCard index={12}
+      src={{ src: demo12src, alt: "Demo 12 source image" }}
+      gt={{ src: demo12gt, alt: "Demo 12 ground truth" }}
+      view3d={{ src: demo123d, alt: "Demo 12 3D view" }}
+      ours={{ src: demo12ours, alt: "Demo 12 our result" }}
+      qwen={{ src: demo12qwen, alt: "Demo 12 Qwen result" }}
+      nanoBanana={{ src: demo12nano, alt: "Demo 12 Nano Banana Pro result" }}
+    />
+  </CarouselSlide>
+  <CarouselSlide>
+    <DemoCard index={13}
+      src={{ src: demo13src, alt: "Demo 13 source image" }}
+      gt={{ src: demo13gt, alt: "Demo 13 ground truth" }}
+      view3d={{ src: demo133d, alt: "Demo 13 3D view" }}
+      ours={{ src: demo13ours, alt: "Demo 13 our result" }}
+      qwen={{ src: demo13qwen, alt: "Demo 13 Qwen result" }}
+      nanoBanana={{ src: demo13nano, alt: "Demo 13 Nano Banana Pro result" }}
+    />
+  </CarouselSlide>
+  <CarouselSlide>
+    <DemoCard index={14}
+      src={{ src: demo14src, alt: "Demo 14 source image" }}
+      gt={{ src: demo14gt, alt: "Demo 14 ground truth" }}
+      view3d={{ src: demo143d, alt: "Demo 14 3D view" }}
+      ours={{ src: demo14ours, alt: "Demo 14 our result" }}
+      qwen={{ src: demo14qwen, alt: "Demo 14 Qwen result" }}
+      nanoBanana={{ src: demo14nano, alt: "Demo 14 Nano Banana Pro result" }}
+    />
+  </CarouselSlide>
+</Carousel>
 
 ## Continuous Object Manipulation
 
