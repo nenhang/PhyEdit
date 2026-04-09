@@ -1,6 +1,4 @@
 ---
-import { Font } from "astro:assets";
-
 import Links from "../components/Links.astro";
 import Authors from "../components/Authors.astro";
 import Notes from "../components/Notes.astro";
@@ -55,11 +53,6 @@ const prefix = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
     {description && <meta property="og:description" content={description} />}
     <meta property="og:type" content="website" />
     {thumbnail && <meta property="og:image" content={prefix + thumbnail} />}
-
-    <Font
-      cssVariable="--font-noto-sans"
-      preload={[{ subset: "latin", style: "normal" }]}
-    />
 
     <title>{title}</title>
   </head>

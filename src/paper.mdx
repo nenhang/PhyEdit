@@ -3,19 +3,17 @@ title: "PhyEdit: Towards Real-World Object Manipulation via Physically-Grounded 
 authors:
   - name: Ruihang Xu
     url: https://scholar.google.com/citations?user=5ZDU6wwAAAAJ
-    institution: Zhejiang University
   - name: Dewei Zhou
     url: https://scholar.google.com/citations?user=4C_OwWMAAAAJ
-    institution: Zhejiang University
   - name: Xiaolong Shen
     url: https://scholar.google.com/citations?user=vAMMc8EAAAAJ
-    institution: Zhejiang University
   - name: Fan Ma
     url: https://scholar.google.com/citations?user=FyglsaAAAAAJ
-    institution: Zhejiang University
   - name: Yi Yang
     url: https://scholar.google.com/citations?user=RMSuNFwAAAAJ
-    institution: Zhejiang University
+notes:
+  - symbol: ""
+    text: "ReLER Lab, CCAI, Zhejiang University"
 conference: ACM MM 2026
 links:
   - name: Paper
@@ -42,117 +40,30 @@ import Wide from "./components/Wide.astro";
 import Carousel from "./components/Carousel.astro";
 import CarouselSlide from "./components/CarouselSlide.astro";
 import TwoColumns from "./components/TwoColumns.astro";
-import DemoCard from "./components/DemoCard.astro";
-{/* import ModelViewer from "./components/ModelViewer.astro" */}
+// import DemoCard from "./components/DemoCard.astro"
+// import ModelViewer from "./components/ModelViewer.astro"
 
 import teaser from "./assets/teaser.webp";
 import modelOverview from "./assets/model_overview.webp";
 import datasetSample from "./assets/dataset_sample.webp";
 import datasetPipeline from "./assets/dataset_contruction_pipeline.webp";
-import benchDemo from "./assets/bench_demo.webp";
-import benchDemoAppendix from "./assets/bench_demo_appendix.webp";
+// import benchDemo from "./assets/bench_demo.webp";
+// import benchDemoAppendix from "./assets/bench_demo_appendix.webp";
 import continuousEdit from "./assets/continuous_edit.webp";
-
-{/* Demo images — replace placeholder with real webp once ready */}
-import placeholder from "./assets/dogs-diffc.png";
-
-import demo01src from "./assets/demos/01/src.webp";
-import demo01gt from "./assets/demos/01/gt.webp";
-import demo013d from "./assets/demos/01/3d.webp";
-import demo01ours from "./assets/demos/01/ours.webp";
-import demo01qwen from "./assets/demos/01/qwen.webp";
-import demo01nano from "./assets/demos/01/nano_banana.webp";
-
-import demo02src from "./assets/demos/02/src.webp";
-import demo02gt from "./assets/demos/02/gt.webp";
-import demo023d from "./assets/demos/02/3d.webp";
-import demo02ours from "./assets/demos/02/ours.webp";
-import demo02qwen from "./assets/demos/02/qwen.webp";
-import demo02nano from "./assets/demos/02/nano_banana.webp";
-
-import demo03src from "./assets/demos/03/src.webp";
-import demo03gt from "./assets/demos/03/gt.webp";
-import demo033d from "./assets/demos/03/3d.webp";
-import demo03ours from "./assets/demos/03/ours.webp";
-import demo03qwen from "./assets/demos/03/qwen.webp";
-import demo03nano from "./assets/demos/03/nano_banana.webp";
-
-import demo04src from "./assets/demos/04/src.webp";
-import demo04gt from "./assets/demos/04/gt.webp";
-import demo043d from "./assets/demos/04/3d.webp";
-import demo04ours from "./assets/demos/04/ours.webp";
-import demo04qwen from "./assets/demos/04/qwen.webp";
-import demo04nano from "./assets/demos/04/nano_banana.webp";
-
-import demo05src from "./assets/demos/05/src.webp";
-import demo05gt from "./assets/demos/05/gt.webp";
-import demo053d from "./assets/demos/05/3d.webp";
-import demo05ours from "./assets/demos/05/ours.webp";
-import demo05qwen from "./assets/demos/05/qwen.webp";
-import demo05nano from "./assets/demos/05/nano_banana.webp";
-
-import demo06src from "./assets/demos/06/src.webp";
-import demo06gt from "./assets/demos/06/gt.webp";
-import demo063d from "./assets/demos/06/3d.webp";
-import demo06ours from "./assets/demos/06/ours.webp";
-import demo06qwen from "./assets/demos/06/qwen.webp";
-import demo06nano from "./assets/demos/06/nano_banana.webp";
-
-import demo07src from "./assets/demos/07/src.webp";
-import demo07gt from "./assets/demos/07/gt.webp";
-import demo073d from "./assets/demos/07/3d.webp";
-import demo07ours from "./assets/demos/07/ours.webp";
-import demo07qwen from "./assets/demos/07/qwen.webp";
-import demo07nano from "./assets/demos/07/nano_banana.webp";
-
-import demo08src from "./assets/demos/08/src.webp";
-import demo08gt from "./assets/demos/08/gt.webp";
-import demo083d from "./assets/demos/08/3d.webp";
-import demo08ours from "./assets/demos/08/ours.webp";
-import demo08qwen from "./assets/demos/08/qwen.webp";
-import demo08nano from "./assets/demos/08/nano_banana.webp";
-
-import demo09src from "./assets/demos/09/src.webp";
-import demo09gt from "./assets/demos/09/gt.webp";
-import demo093d from "./assets/demos/09/3d.webp";
-import demo09ours from "./assets/demos/09/ours.webp";
-import demo09qwen from "./assets/demos/09/qwen.webp";
-import demo09nano from "./assets/demos/09/nano_banana.webp";
-
-import demo10src from "./assets/demos/10/src.webp";
-import demo10gt from "./assets/demos/10/gt.webp";
-import demo103d from "./assets/demos/10/3d.webp";
-import demo10ours from "./assets/demos/10/ours.webp";
-import demo10qwen from "./assets/demos/10/qwen.webp";
-import demo10nano from "./assets/demos/10/nano_banana.webp";
-
-import demo11src from "./assets/demos/11/src.webp";
-import demo11gt from "./assets/demos/11/gt.webp";
-import demo113d from "./assets/demos/11/3d.webp";
-import demo11ours from "./assets/demos/11/ours.webp";
-import demo11qwen from "./assets/demos/11/qwen.webp";
-import demo11nano from "./assets/demos/11/nano_banana.webp";
-
-import demo12src from "./assets/demos/12/src.webp";
-import demo12gt from "./assets/demos/12/gt.webp";
-import demo123d from "./assets/demos/12/3d.webp";
-import demo12ours from "./assets/demos/12/ours.webp";
-import demo12qwen from "./assets/demos/12/qwen.webp";
-import demo12nano from "./assets/demos/12/nano_banana.webp";
-
-import demo13src from "./assets/demos/13/src.webp";
-import demo13gt from "./assets/demos/13/gt.webp";
-import demo133d from "./assets/demos/13/3d.webp";
-import demo13ours from "./assets/demos/13/ours.webp";
-import demo13qwen from "./assets/demos/13/qwen.webp";
-import demo13nano from "./assets/demos/13/nano_banana.webp";
-
-import demo14src from "./assets/demos/14/src.webp";
-import demo14gt from "./assets/demos/14/gt.webp";
-import demo143d from "./assets/demos/14/3d.webp";
-import demo14ours from "./assets/demos/14/ours.webp";
-import demo14qwen from "./assets/demos/14/qwen.webp";
-import demo14nano from "./assets/demos/14/nano_banana.webp";
+import demo01 from "./assets/demos/01.webp";
+import demo02 from "./assets/demos/02.webp";
+import demo03 from "./assets/demos/03.webp";
+import demo04 from "./assets/demos/04.webp";
+import demo05 from "./assets/demos/05.webp";
+import demo06 from "./assets/demos/06.webp";
+import demo07 from "./assets/demos/07.webp";
+import demo08 from "./assets/demos/08.webp";
+import demo09 from "./assets/demos/09.webp";
+import demo10 from "./assets/demos/10.webp";
+import demo11 from "./assets/demos/11.webp";
+import demo12 from "./assets/demos/12.webp";
+import demo13 from "./assets/demos/13.webp";
+import demo14 from "./assets/demos/14.webp";
 
 <Wide>
   <Figure>
@@ -172,167 +83,41 @@ Achieving physically accurate object manipulation in image editing is essential 
 ## Demo
 
 <Carousel>
-  <CarouselSlide>
-    <DemoCard index={1}
-      src={{ src: demo01src, alt: "Demo 1 source image" }}
-      gt={{ src: demo01gt, alt: "Demo 1 ground truth" }}
-      view3d={{ src: demo013d, alt: "Demo 1 3D view" }}
-      ours={{ src: demo01ours, alt: "Demo 1 our result" }}
-      qwen={{ src: demo01qwen, alt: "Demo 1 Qwen result" }}
-      nanoBanana={{ src: demo01nano, alt: "Demo 1 Nano Banana Pro result" }}
-    />
-  </CarouselSlide>
-  <CarouselSlide>
-    <DemoCard index={2}
-      src={{ src: demo02src, alt: "Demo 2 source image" }}
-      gt={{ src: demo02gt, alt: "Demo 2 ground truth" }}
-      view3d={{ src: demo023d, alt: "Demo 2 3D view" }}
-      ours={{ src: demo02ours, alt: "Demo 2 our result" }}
-      qwen={{ src: demo02qwen, alt: "Demo 2 Qwen result" }}
-      nanoBanana={{ src: demo02nano, alt: "Demo 2 Nano Banana Pro result" }}
-    />
-  </CarouselSlide>
-  <CarouselSlide>
-    <DemoCard index={3}
-      src={{ src: demo03src, alt: "Demo 3 source image" }}
-      gt={{ src: demo03gt, alt: "Demo 3 ground truth" }}
-      view3d={{ src: demo033d, alt: "Demo 3 3D view" }}
-      ours={{ src: demo03ours, alt: "Demo 3 our result" }}
-      qwen={{ src: demo03qwen, alt: "Demo 3 Qwen result" }}
-      nanoBanana={{ src: demo03nano, alt: "Demo 3 Nano Banana Pro result" }}
-    />
-  </CarouselSlide>
-  <CarouselSlide>
-    <DemoCard index={4}
-      src={{ src: demo04src, alt: "Demo 4 source image" }}
-      gt={{ src: demo04gt, alt: "Demo 4 ground truth" }}
-      view3d={{ src: demo043d, alt: "Demo 4 3D view" }}
-      ours={{ src: demo04ours, alt: "Demo 4 our result" }}
-      qwen={{ src: demo04qwen, alt: "Demo 4 Qwen result" }}
-      nanoBanana={{ src: demo04nano, alt: "Demo 4 Nano Banana Pro result" }}
-    />
-  </CarouselSlide>
-  <CarouselSlide>
-    <DemoCard index={5}
-      src={{ src: demo05src, alt: "Demo 5 source image" }}
-      gt={{ src: demo05gt, alt: "Demo 5 ground truth" }}
-      view3d={{ src: demo053d, alt: "Demo 5 3D view" }}
-      ours={{ src: demo05ours, alt: "Demo 5 our result" }}
-      qwen={{ src: demo05qwen, alt: "Demo 5 Qwen result" }}
-      nanoBanana={{ src: demo05nano, alt: "Demo 5 Nano Banana Pro result" }}
-    />
-  </CarouselSlide>
-  <CarouselSlide>
-    <DemoCard index={6}
-      src={{ src: demo06src, alt: "Demo 6 source image" }}
-      gt={{ src: demo06gt, alt: "Demo 6 ground truth" }}
-      view3d={{ src: demo063d, alt: "Demo 6 3D view" }}
-      ours={{ src: demo06ours, alt: "Demo 6 our result" }}
-      qwen={{ src: demo06qwen, alt: "Demo 6 Qwen result" }}
-      nanoBanana={{ src: demo06nano, alt: "Demo 6 Nano Banana Pro result" }}
-    />
-  </CarouselSlide>
-  <CarouselSlide>
-    <DemoCard index={7}
-      src={{ src: demo07src, alt: "Demo 7 source image" }}
-      gt={{ src: demo07gt, alt: "Demo 7 ground truth" }}
-      view3d={{ src: demo073d, alt: "Demo 7 3D view" }}
-      ours={{ src: demo07ours, alt: "Demo 7 our result" }}
-      qwen={{ src: demo07qwen, alt: "Demo 7 Qwen result" }}
-      nanoBanana={{ src: demo07nano, alt: "Demo 7 Nano Banana Pro result" }}
-    />
-  </CarouselSlide>
-  <CarouselSlide>
-    <DemoCard index={8}
-      src={{ src: demo08src, alt: "Demo 8 source image" }}
-      gt={{ src: demo08gt, alt: "Demo 8 ground truth" }}
-      view3d={{ src: demo083d, alt: "Demo 8 3D view" }}
-      ours={{ src: demo08ours, alt: "Demo 8 our result" }}
-      qwen={{ src: demo08qwen, alt: "Demo 8 Qwen result" }}
-      nanoBanana={{ src: demo08nano, alt: "Demo 8 Nano Banana Pro result" }}
-    />
-  </CarouselSlide>
-  <CarouselSlide>
-    <DemoCard index={9}
-      src={{ src: demo09src, alt: "Demo 9 source image" }}
-      gt={{ src: demo09gt, alt: "Demo 9 ground truth" }}
-      view3d={{ src: demo093d, alt: "Demo 9 3D view" }}
-      ours={{ src: demo09ours, alt: "Demo 9 our result" }}
-      qwen={{ src: demo09qwen, alt: "Demo 9 Qwen result" }}
-      nanoBanana={{ src: demo09nano, alt: "Demo 9 Nano Banana Pro result" }}
-    />
-  </CarouselSlide>
-  <CarouselSlide>
-    <DemoCard index={10}
-      src={{ src: demo10src, alt: "Demo 10 source image" }}
-      gt={{ src: demo10gt, alt: "Demo 10 ground truth" }}
-      view3d={{ src: demo103d, alt: "Demo 10 3D view" }}
-      ours={{ src: demo10ours, alt: "Demo 10 our result" }}
-      qwen={{ src: demo10qwen, alt: "Demo 10 Qwen result" }}
-      nanoBanana={{ src: demo10nano, alt: "Demo 10 Nano Banana Pro result" }}
-    />
-  </CarouselSlide>
-  <CarouselSlide>
-    <DemoCard index={11}
-      src={{ src: demo11src, alt: "Demo 11 source image" }}
-      gt={{ src: demo11gt, alt: "Demo 11 ground truth" }}
-      view3d={{ src: demo113d, alt: "Demo 11 3D view" }}
-      ours={{ src: demo11ours, alt: "Demo 11 our result" }}
-      qwen={{ src: demo11qwen, alt: "Demo 11 Qwen result" }}
-      nanoBanana={{ src: demo11nano, alt: "Demo 11 Nano Banana Pro result" }}
-    />
-  </CarouselSlide>
-  <CarouselSlide>
-    <DemoCard index={12}
-      src={{ src: demo12src, alt: "Demo 12 source image" }}
-      gt={{ src: demo12gt, alt: "Demo 12 ground truth" }}
-      view3d={{ src: demo123d, alt: "Demo 12 3D view" }}
-      ours={{ src: demo12ours, alt: "Demo 12 our result" }}
-      qwen={{ src: demo12qwen, alt: "Demo 12 Qwen result" }}
-      nanoBanana={{ src: demo12nano, alt: "Demo 12 Nano Banana Pro result" }}
-    />
-  </CarouselSlide>
-  <CarouselSlide>
-    <DemoCard index={13}
-      src={{ src: demo13src, alt: "Demo 13 source image" }}
-      gt={{ src: demo13gt, alt: "Demo 13 ground truth" }}
-      view3d={{ src: demo133d, alt: "Demo 13 3D view" }}
-      ours={{ src: demo13ours, alt: "Demo 13 our result" }}
-      qwen={{ src: demo13qwen, alt: "Demo 13 Qwen result" }}
-      nanoBanana={{ src: demo13nano, alt: "Demo 13 Nano Banana Pro result" }}
-    />
-  </CarouselSlide>
-  <CarouselSlide>
-    <DemoCard index={14}
-      src={{ src: demo14src, alt: "Demo 14 source image" }}
-      gt={{ src: demo14gt, alt: "Demo 14 ground truth" }}
-      view3d={{ src: demo143d, alt: "Demo 14 3D view" }}
-      ours={{ src: demo14ours, alt: "Demo 14 our result" }}
-      qwen={{ src: demo14qwen, alt: "Demo 14 Qwen result" }}
-      nanoBanana={{ src: demo14nano, alt: "Demo 14 Nano Banana Pro result" }}
-    />
-  </CarouselSlide>
+  <CarouselSlide><Picture src={demo01} alt="Demo 1" class="rounded-xl" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo02} alt="Demo 2" class="rounded-xl" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo03} alt="Demo 3" class="rounded-xl" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo04} alt="Demo 4" class="rounded-xl" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo05} alt="Demo 5" class="rounded-xl" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo06} alt="Demo 6" class="rounded-xl" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo07} alt="Demo 7" class="rounded-xl" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo08} alt="Demo 8" class="rounded-xl" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo09} alt="Demo 9" class="rounded-xl" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo10} alt="Demo 10" class="rounded-xl" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo11} alt="Demo 11" class="rounded-xl" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo12} alt="Demo 12" class="rounded-xl" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo13} alt="Demo 13" class="rounded-xl" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo14} alt="Demo 14" class="rounded-xl" /></CarouselSlide>
 </Carousel>
 
 ## Continuous Object Manipulation
 
 Beyond single-step editing, <SmallCaps>PhyEdit</SmallCaps> maintains geometric consistency under continuous state transitions. Given an initial state and a spatial trajectory, our model sequentially renders physically accurate keyframes that can be processed by video interpolation models to synthesize a continuous, physically consistent manipulation video. The robotic arm below is out of our training distribution, demonstrating strong generalization.
 
-<Figure>
-  <Picture slot="figure" src={continuousEdit} alt="Continuous object manipulation along a trajectory" />
-  <Fragment slot="caption">Continuous object manipulation along a trajectory. <SmallCaps>PhyEdit</SmallCaps> renders keyframes (solid borders); a video model interpolates intermediate frames (dashed borders).</Fragment>
-</Figure>
+<Wide>
+  <Figure>
+    <Picture slot="figure" src={continuousEdit} alt="Continuous object manipulation along a trajectory" />
+    <Fragment slot="caption">Continuous object manipulation along a trajectory. <SmallCaps>PhyEdit</SmallCaps> renders keyframes (solid borders); a video model interpolates intermediate frames (dashed borders).</Fragment>
+  </Figure>
+</Wide>
 
 ## Method
 
 <SmallCaps>PhyEdit</SmallCaps> combines a DiT editing backbone with a 3D foundation model. The framework has three components: (1) a **3D transformation module** that generates a depth-aware preview, (2) the **DiT denoising backbone**, and (3) a **joint training loss** in both 2D latent and 3D depth spaces.
 
-<Wide>
-  <Figure>
-    <Picture slot="figure" src={modelOverview} alt="Overview of the PhyEdit model architecture" />
-    <Fragment slot="caption">Overview of PhyEdit. User and GT inputs are first processed via the 3D transformation module. The resulting conditions are fed into the backbone for the training forward pass, followed by joint 2D and 3D supervision.</Fragment>
-  </Figure>
-</Wide>
+<Figure>
+  <Picture slot="figure" src={modelOverview} alt="Overview of the PhyEdit model architecture" />
+  <Fragment slot="caption">Overview of PhyEdit. User and GT inputs are first processed via the 3D transformation module. The resulting conditions are fed into the backbone for the training forward pass, followed by joint 2D and 3D supervision.</Fragment>
+</Figure>
 
 ### 3D Transformation Module
 
@@ -360,19 +145,15 @@ where $\lambda_d = 0.1$ balances latent and depth supervision. This is lightweig
 
 We build <SmallCaps>RealManip-10K</SmallCaps>, a real-world dataset of paired images $(I_\text{src}, I_\text{tgt})$ where objects are manipulated in 3D space, especially along the depth axis. Each pair provides depth maps, object masks, and representative 3D object coordinates.
 
-<Wide>
-  <Figure>
-    <Picture slot="figure" src={datasetSample} alt="Sample image pairs from the RealManip-10K dataset" />
-    <Fragment slot="caption">Samples from <SmallCaps>RealManip-10K</SmallCaps>. Objects are annotated with bounding boxes, and 3D coordinates $(x, y, z)$ are given in the camera coordinate system.</Fragment>
-  </Figure>
-</Wide>
+<Figure>
+  <Picture slot="figure" src={datasetSample} alt="Sample image pairs from the RealManip-10K dataset" />
+  <Fragment slot="caption">Samples from <SmallCaps>RealManip-10K</SmallCaps>. Objects are annotated with bounding boxes, and 3D coordinates $(x, y, z)$ are given in the camera coordinate system.</Fragment>
+</Figure>
 
-<Wide>
-  <Figure>
-    <Picture slot="figure" src={datasetPipeline} alt="The four-stage pipeline used to construct RealManip-10K" />
-    <Fragment slot="caption">Dataset construction pipeline: data source filtering → camera-static clip extraction → depth and mask processing → depth-aware frame pair selection.</Fragment>
-  </Figure>
-</Wide>
+<Figure>
+  <Picture slot="figure" src={datasetPipeline} alt="The four-stage pipeline used to construct RealManip-10K" />
+  <Fragment slot="caption">Dataset construction pipeline: data source filtering → camera-static clip extraction → depth and mask processing → depth-aware frame pair selection.</Fragment>
+</Figure>
 
 The pipeline collects videos from OpenVid-1M, VIDGEN-1M, PE-Video-Dataset, and object-tracking datasets (LaSOT, GoT-10K, TrackingNet). A novel **camera token clustering** approach using DBSCAN ensures near-static camera conditions without relying on optical flow or hand-crafted feature matching.
 
@@ -413,7 +194,3 @@ Our method achieves the **best overall performance** across manipulation-related
   url={https://arxiv.org/abs/2604.07230},
 }
 ```
-
-## Bibliography
-
-[^ref]

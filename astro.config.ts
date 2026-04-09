@@ -1,4 +1,4 @@
-import { defineConfig, fontProviders } from "astro/config";
+import { defineConfig } from "astro/config";
 import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
 import mdx from "@astrojs/mdx";
@@ -47,16 +47,6 @@ export default defineConfig({
     mdx(),
     react(),
   ],
-  experimental: {
-    fonts: [
-      {
-        provider: fontProviders.google(),
-        name: "Noto Sans",
-        cssVariable: "--font-noto-sans",
-        weights: ["100 900"],
-      },
-    ],
-  },
   image: {
     responsiveStyles: true,
   },
