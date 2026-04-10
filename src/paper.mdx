@@ -16,7 +16,7 @@ notes:
     text: "ReLER Lab, CCAI, Zhejiang University"
 links:
   - name: Paper
-    url: https://arxiv.org/abs/2604.07230
+    url: https://arxiv.org/pdf/2604.07230
     icon: ri:file-pdf-2-line
   - name: arXiv
     url: https://arxiv.org/abs/2604.07230
@@ -77,7 +77,7 @@ import demo14 from "./assets/demos/14.webp";
 </Figure>
 
 <p class="not-prose my-8 text-center text-xl font-medium leading-relaxed text-zinc-700 dark:text-zinc-300">
-  <SmallCaps>PhyEdit</SmallCaps> enables physically accurate object manipulation in images — moving, rotating, and placing objects with correct 3D geometry and perspective, without any manual 3D modeling.
+  <SmallCaps>PhyEdit</SmallCaps> enables physical-grounded object manipulation in images editing — moving and editing objects in the 3D space with geometric accuracy and physical consistency.
 </p>
 
 <HighlightedSection>
@@ -111,24 +111,17 @@ Achieving physically accurate object manipulation in image editing is essential 
 
 Beyond single-step editing, <SmallCaps>PhyEdit</SmallCaps> maintains geometric consistency under continuous state transitions. Given an initial state and a spatial trajectory, our model sequentially renders physically accurate keyframes that can be processed by video interpolation models to synthesize a continuous, physically consistent manipulation video. The robotic arm below is out of our training distribution, demonstrating strong generalization.
 
-<div class="not-prose mx-auto max-w-[70rem] px-6">
-  <div class="flex gap-4 items-stretch">
-    <div class="flex-shrink-0 w-56">
-      <img src={contiInitial.src} alt="Initial state" class="h-full w-full rounded-xl object-cover" style="max-height: 18rem;" />
-    </div>
-    <div class="flex-1 overflow-x-auto">
-      <div class="flex gap-3 h-72">
-        <img src={contiFrame01.src} alt="Keyframe 1" class="h-full w-auto flex-shrink-0 rounded-xl object-cover" />
-        <img src={contiFrame02.src} alt="Keyframe 2" class="h-full w-auto flex-shrink-0 rounded-xl object-cover" />
-        <img src={contiFrame03.src} alt="Keyframe 3" class="h-full w-auto flex-shrink-0 rounded-xl object-cover" />
-        <img src={contiFrame04.src} alt="Keyframe 4" class="h-full w-auto flex-shrink-0 rounded-xl object-cover" />
-        <img src={contiFrame05.src} alt="Keyframe 5" class="h-full w-auto flex-shrink-0 rounded-xl object-cover" />
-        <img src={contiFrame06.src} alt="Keyframe 6" class="h-full w-auto flex-shrink-0 rounded-xl object-cover" />
-      </div>
-    </div>
-  </div>
-  <p class="mt-3 text-center text-sm text-zinc-500 dark:text-zinc-400">Continuous object manipulation along a trajectory. <SmallCaps>PhyEdit</SmallCaps> renders keyframes (solid borders); a video model interpolates intermediate frames (dashed borders).</p>
-</div>
+<Carousel>
+  <CarouselSlide><Picture src={contiInitial} alt="Initial state — starting configuration before manipulation" /></CarouselSlide>
+  <CarouselSlide><Picture src={contiFrame01} alt="Keyframe 1" /></CarouselSlide>
+  <CarouselSlide><Picture src={contiFrame02} alt="Keyframe 2" /></CarouselSlide>
+  <CarouselSlide><Picture src={contiFrame03} alt="Keyframe 3" /></CarouselSlide>
+  <CarouselSlide><Picture src={contiFrame04} alt="Keyframe 4" /></CarouselSlide>
+  <CarouselSlide><Picture src={contiFrame05} alt="Keyframe 5" /></CarouselSlide>
+  <CarouselSlide><Picture src={contiFrame06} alt="Keyframe 6" /></CarouselSlide>
+</Carousel>
+
+<p class="not-prose mx-auto mt-2 mb-8 max-w-[50rem] text-center text-sm text-zinc-500 dark:text-zinc-400">Continuous object manipulation along a trajectory. The first slide shows the initial state; subsequent slides are rendered keyframes. A video model interpolates intermediate frames to produce a smooth manipulation video.</p>
 
 ## Method
 
