@@ -49,6 +49,13 @@ import datasetPipeline from "./assets/dataset_contruction_pipeline.webp";
 // import benchDemo from "./assets/bench_demo.webp";
 // import benchDemoAppendix from "./assets/bench_demo_appendix.webp";
 import continuousEdit from "./assets/continuous_edit.webp";
+import contiInitial from "./assets/conti_demos/initial_00.webp";
+import contiFrame01 from "./assets/conti_demos/frame_01.webp";
+import contiFrame02 from "./assets/conti_demos/frame_02.webp";
+import contiFrame03 from "./assets/conti_demos/frame_03.webp";
+import contiFrame04 from "./assets/conti_demos/frame_04.webp";
+import contiFrame05 from "./assets/conti_demos/frame_05.webp";
+import contiFrame06 from "./assets/conti_demos/frame_06.webp";
 import demo01 from "./assets/demos/01.webp";
 import demo02 from "./assets/demos/02.webp";
 import demo03 from "./assets/demos/03.webp";
@@ -64,12 +71,14 @@ import demo12 from "./assets/demos/12.webp";
 import demo13 from "./assets/demos/13.webp";
 import demo14 from "./assets/demos/14.webp";
 
-<Wide>
-  <Figure>
-    <Picture slot="figure" src={teaser} alt="Comparison of PhyEdit editing results against Nano Banana Pro across three physical scenarios" />
-    <Fragment slot="caption">Comparison of image editing results on three physical scenarios between PhyEdit and Nano Banana Pro. PhyEdit achieves more accurate object placement and geometric consistency.</Fragment>
-  </Figure>
-</Wide>
+<Figure>
+  <Picture slot="figure" src={teaser} alt="Comparison of PhyEdit editing results against Nano Banana Pro across three physical scenarios" />
+  <Fragment slot="caption">Comparison of image editing results on three physical scenarios between PhyEdit and Nano Banana Pro. PhyEdit achieves more accurate object placement and geometric consistency.</Fragment>
+</Figure>
+
+<p class="not-prose my-8 text-center text-xl font-medium leading-relaxed text-zinc-700 dark:text-zinc-300">
+  <SmallCaps>PhyEdit</SmallCaps> enables physically accurate object manipulation in images — moving, rotating, and placing objects with correct 3D geometry and perspective, without any manual 3D modeling.
+</p>
 
 <HighlightedSection>
 
@@ -82,32 +91,44 @@ Achieving physically accurate object manipulation in image editing is essential 
 ## Demo
 
 <Carousel>
-  <CarouselSlide><Picture src={demo01} alt="Demo 1" class="rounded-xl" /></CarouselSlide>
-  <CarouselSlide><Picture src={demo02} alt="Demo 2" class="rounded-xl" /></CarouselSlide>
-  <CarouselSlide><Picture src={demo03} alt="Demo 3" class="rounded-xl" /></CarouselSlide>
-  <CarouselSlide><Picture src={demo04} alt="Demo 4" class="rounded-xl" /></CarouselSlide>
-  <CarouselSlide><Picture src={demo05} alt="Demo 5" class="rounded-xl" /></CarouselSlide>
-  <CarouselSlide><Picture src={demo06} alt="Demo 6" class="rounded-xl" /></CarouselSlide>
-  <CarouselSlide><Picture src={demo07} alt="Demo 7" class="rounded-xl" /></CarouselSlide>
-  <CarouselSlide><Picture src={demo08} alt="Demo 8" class="rounded-xl" /></CarouselSlide>
-  <CarouselSlide><Picture src={demo09} alt="Demo 9" class="rounded-xl" /></CarouselSlide>
-  <CarouselSlide><Picture src={demo10} alt="Demo 10" class="rounded-xl" /></CarouselSlide>
-  <CarouselSlide><Picture src={demo11} alt="Demo 11" class="rounded-xl" /></CarouselSlide>
-  <CarouselSlide><Picture src={demo12} alt="Demo 12" class="rounded-xl" /></CarouselSlide>
-  <CarouselSlide><Picture src={demo13} alt="Demo 13" class="rounded-xl" /></CarouselSlide>
-  <CarouselSlide><Picture src={demo14} alt="Demo 14" class="rounded-xl" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo01} alt="Demo 1" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo02} alt="Demo 2" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo03} alt="Demo 3" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo04} alt="Demo 4" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo05} alt="Demo 5" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo06} alt="Demo 6" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo07} alt="Demo 7" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo08} alt="Demo 8" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo09} alt="Demo 9" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo10} alt="Demo 10" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo11} alt="Demo 11" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo12} alt="Demo 12" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo13} alt="Demo 13" /></CarouselSlide>
+  <CarouselSlide><Picture src={demo14} alt="Demo 14" /></CarouselSlide>
 </Carousel>
 
 ## Continuous Object Manipulation
 
 Beyond single-step editing, <SmallCaps>PhyEdit</SmallCaps> maintains geometric consistency under continuous state transitions. Given an initial state and a spatial trajectory, our model sequentially renders physically accurate keyframes that can be processed by video interpolation models to synthesize a continuous, physically consistent manipulation video. The robotic arm below is out of our training distribution, demonstrating strong generalization.
 
-<Wide>
-  <Figure>
-    <Picture slot="figure" src={continuousEdit} alt="Continuous object manipulation along a trajectory" />
-    <Fragment slot="caption">Continuous object manipulation along a trajectory. <SmallCaps>PhyEdit</SmallCaps> renders keyframes (solid borders); a video model interpolates intermediate frames (dashed borders).</Fragment>
-  </Figure>
-</Wide>
+<div class="not-prose mx-auto max-w-[70rem] px-6">
+  <div class="flex gap-4 items-stretch">
+    <div class="flex-shrink-0 w-56">
+      <img src={contiInitial.src} alt="Initial state" class="h-full w-full rounded-xl object-cover" style="max-height: 18rem;" />
+    </div>
+    <div class="flex-1 overflow-x-auto">
+      <div class="flex gap-3 h-72">
+        <img src={contiFrame01.src} alt="Keyframe 1" class="h-full w-auto flex-shrink-0 rounded-xl object-cover" />
+        <img src={contiFrame02.src} alt="Keyframe 2" class="h-full w-auto flex-shrink-0 rounded-xl object-cover" />
+        <img src={contiFrame03.src} alt="Keyframe 3" class="h-full w-auto flex-shrink-0 rounded-xl object-cover" />
+        <img src={contiFrame04.src} alt="Keyframe 4" class="h-full w-auto flex-shrink-0 rounded-xl object-cover" />
+        <img src={contiFrame05.src} alt="Keyframe 5" class="h-full w-auto flex-shrink-0 rounded-xl object-cover" />
+        <img src={contiFrame06.src} alt="Keyframe 6" class="h-full w-auto flex-shrink-0 rounded-xl object-cover" />
+      </div>
+    </div>
+  </div>
+  <p class="mt-3 text-center text-sm text-zinc-500 dark:text-zinc-400">Continuous object manipulation along a trajectory. <SmallCaps>PhyEdit</SmallCaps> renders keyframes (solid borders); a video model interpolates intermediate frames (dashed borders).</p>
+</div>
 
 ## Method
 
