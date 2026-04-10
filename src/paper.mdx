@@ -112,13 +112,13 @@ Achieving physically accurate object manipulation in image editing is essential 
 Beyond single-step editing, <SmallCaps>PhyEdit</SmallCaps> maintains geometric consistency under continuous state transitions. Given an initial state and a spatial trajectory, our model sequentially renders physically accurate keyframes that can be processed by video interpolation models to synthesize a continuous, physically consistent manipulation video. The robotic arm below is out of our training distribution, demonstrating strong generalization.
 
 <Carousel>
-  <CarouselSlide><Picture src={contiInitial} alt="Initial state — starting configuration before manipulation" /></CarouselSlide>
-  <CarouselSlide><Picture src={contiFrame01} alt="Keyframe 1" /></CarouselSlide>
-  <CarouselSlide><Picture src={contiFrame02} alt="Keyframe 2" /></CarouselSlide>
-  <CarouselSlide><Picture src={contiFrame03} alt="Keyframe 3" /></CarouselSlide>
-  <CarouselSlide><Picture src={contiFrame04} alt="Keyframe 4" /></CarouselSlide>
-  <CarouselSlide><Picture src={contiFrame05} alt="Keyframe 5" /></CarouselSlide>
-  <CarouselSlide><Picture src={contiFrame06} alt="Keyframe 6" /></CarouselSlide>
+  <CarouselSlide><img src={contiInitial.src} alt="Initial state" class="h-72 w-full object-contain" /></CarouselSlide>
+  <CarouselSlide><img src={contiFrame01.src} alt="Keyframe 1" class="h-72 w-full object-contain" /></CarouselSlide>
+  <CarouselSlide><img src={contiFrame02.src} alt="Keyframe 2" class="h-72 w-full object-contain" /></CarouselSlide>
+  <CarouselSlide><img src={contiFrame03.src} alt="Keyframe 3" class="h-72 w-full object-contain" /></CarouselSlide>
+  <CarouselSlide><img src={contiFrame04.src} alt="Keyframe 4" class="h-72 w-full object-contain" /></CarouselSlide>
+  <CarouselSlide><img src={contiFrame05.src} alt="Keyframe 5" class="h-72 w-full object-contain" /></CarouselSlide>
+  <CarouselSlide><img src={contiFrame06.src} alt="Keyframe 6" class="h-72 w-full object-contain" /></CarouselSlide>
 </Carousel>
 
 <p class="not-prose mx-auto mt-2 mb-8 max-w-[50rem] text-center text-sm text-zinc-500 dark:text-zinc-400">Continuous object manipulation along a trajectory. The first slide shows the initial state; subsequent slides are rendered keyframes. A video model interpolates intermediate frames to produce a smooth manipulation video.</p>
