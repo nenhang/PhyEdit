@@ -11,32 +11,34 @@ PhyEdit: Towards Real-World Object Manipulation </br> via Physically-Grounded Im
 <span>ReLER Lab, CCAI, Zhejiang University</span><br>
 </p>
 
-<p align="center">
-<a href="https://nenhang.github.io/PhyEdit"><img src="https://img.shields.io/badge/Project-Page (Coming Soon)-brightgreen" alt="Project Page (Coming Soon)"></a>
-<a href="https://arxiv.org/abs/2604.07230"><img src="https://img.shields.io/badge/arXiv-Paper-b31b1b" alt="Paper"></a>
-</p>
+<div align="center">
+<a href="https://nenhang.github.io/PhyEdit"><img src="https://img.shields.io/badge/Project-Page-blue?style=flat&logo=github&logoColor=ffffff" alt="Project Page"></a>
+<a href="https://arxiv.org/abs/2604.07230"><img src="https://img.shields.io/badge/arXiv-Paper-b31b1b?style=flat&logo=arxiv&logoColor=ffffff" alt="arXiv Paper"></a>
+</div>
 
 ## 📝 Introduction
 
-![Teaser](docs/static/images/teaser.webp)
+![Teaser](assets/teaser.webp)
 
-**PhyEdit** is a framework for **physically-grounded image editing** that allows users to **relocate and edit objects** freely and precisely in the **3D space** of a given image.
+**PhyEdit** is a framework for **physically-grounded image editing** that allows users to **move and edit objects** freely and precisely in the **3D space** of the imagewith geometric accuracy and physical consistency.
 
 ## 🚀 Highlights
 
-- **Physically-Grounded Editing**: PhyEdit leverages geometric constraints to ensure physical plausibility.
+- **Physically-Grounded Editing**: **PhyEdit** leverages geometric constraints to ensure physical plausibility.
 - **Free and Precise Editing**: Users can manipulate objects via coordinates and natural language prompts in 3D space.
 - **Real-World High-Quality Dataset**: **RealManip-10K** is a real-world dataset for physically-grounded object manipulation.
 - **Dedicated Benchmark**: **ManipEval** is a benchmark for evaluating the geometric accuracy of object manipulation editing.
 
 ## ✅ To-Do List
 
-- [x] ArXiv Paper
-- [ ] Project Page
+- [x] [ArXiv Paper](https://arxiv.org/abs/2604.07230)
+- [x] [Project Page](https://nenhang.github.io/PhyEdit) (Here are more interesting demos!)
 - [ ] Inference and Training Code
 - [ ] Dataset and Benchmark
 - [ ] Model Weights
 - [ ] GUI Support
+
+Code and data will be released soon! Stay tuned! 🤗
 
 ## 📭 Citation
 
@@ -53,3 +55,6 @@ If you find PhyEdit helpful to your research, please consider citing our paper:
       url={https://arxiv.org/abs/2604.07230}, 
 }
 ```
+
+
+If you like our work, don't forget to ⭐ our repository! 🤩
