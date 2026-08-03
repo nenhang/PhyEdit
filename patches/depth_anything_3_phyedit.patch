@@ -1,0 +1,145 @@
+diff --git a/src/depth_anything_3/model/da3.py b/src/depth_anything_3/model/da3.py
+index f9e5bd6..0272697 100644
+--- a/src/depth_anything_3/model/da3.py
++++ b/src/depth_anything_3/model/da3.py
+@@ -136,7 +136,16 @@ class DepthAnything3Net(nn.Module):
+         H, W = x.shape[-2], x.shape[-1]
+ 
+         # Process features through depth head
+-        with torch.autocast(device_type=x.device.type, enabled=False):
++        if self.backbone.pretrained.norm.weight.dtype == torch.float32:
++            with torch.autocast(device_type=x.device.type, enabled=False):
++                output = self._process_depth_head(feats, H, W)
++                if use_ray_pose:
++                    output = self._process_ray_pose_estimation(output, H, W)
++                else:
++                    output = self._process_camera_estimation(feats, H, W, output)
++                if infer_gs:
++                    output = self._process_gs_head(feats, H, W, output, x, extrinsics, intrinsics)
++        else:
+             output = self._process_depth_head(feats, H, W)
+             if use_ray_pose:
+                 output = self._process_ray_pose_estimation(output, H, W)
+@@ -362,7 +371,8 @@ class NestedDepthAnything3Net(nn.Module):
+         output = self.da3(
+             x, extrinsics, intrinsics, export_feat_layers=export_feat_layers, infer_gs=infer_gs, use_ray_pose=use_ray_pose, ref_view_strategy=ref_view_strategy
+         )
+-        metric_output = self.da3_metric(x)
++        with torch.no_grad():
++            metric_output = self.da3_metric(x.detach())
+ 
+         # Apply metric scaling and alignment
+         output = self._apply_metric_scaling(output, metric_output)
+@@ -376,40 +386,42 @@ class NestedDepthAnything3Net(nn.Module):
+     ) -> Dict[str, torch.Tensor]:
+         """Apply metric scaling to the metric depth output."""
+         # Scale metric depth based on camera intrinsics
+-        metric_output.depth = apply_metric_scaling(
+-            metric_output.depth,
+-            output.intrinsics,
+-        )
++        with torch.no_grad():
++            metric_output.depth = apply_metric_scaling(
++                metric_output.depth,
++                output.intrinsics.detach(),
++            )
+         return output
+ 
+     def _apply_depth_alignment(
+         self, output: Dict[str, torch.Tensor], metric_output: Dict[str, torch.Tensor]
+     ) -> Dict[str, torch.Tensor]:
+         """Apply depth alignment using least squares scaling."""
+-        # Compute non-sky mask
+-        non_sky_mask = compute_sky_mask(metric_output.sky, threshold=0.3)
+-
+-        # Ensure we have enough non-sky pixels
+-        assert non_sky_mask.sum() > 10, "Insufficient non-sky pixels for alignment"
+-
+-        # Sample depth confidence for quantile computation
+-        depth_conf_ns = output.depth_conf[non_sky_mask]
+-        depth_conf_sampled = sample_tensor_for_quantile(depth_conf_ns, max_samples=100000)
+-        median_conf = torch.quantile(depth_conf_sampled, 0.5)
+-
+-        # Compute alignment mask
+-        align_mask = compute_alignment_mask(
+-            output.depth_conf, non_sky_mask, output.depth, metric_output.depth, median_conf
+-        )
++        with torch.no_grad():
++            non_sky_mask = compute_sky_mask(metric_output.sky.detach(), threshold=0.3)
++            assert non_sky_mask.sum() > 10, "Insufficient non-sky pixels for alignment"
++
++            depth_conf_ns = output.depth_conf.detach()[non_sky_mask]
++            depth_conf_sampled = sample_tensor_for_quantile(depth_conf_ns, max_samples=100000)
++            median_conf = torch.quantile(depth_conf_sampled, 0.5)
++
++            align_mask = compute_alignment_mask(
++                output.depth_conf.detach(),
++                non_sky_mask,
++                output.depth.detach(),
++                metric_output.depth.detach(),
++                median_conf,
++            )
+ 
+-        # Compute scale factor using least squares
+-        valid_depth = output.depth[align_mask]
+-        valid_metric_depth = metric_output.depth[align_mask]
+-        scale_factor = least_squares_scale_scalar(valid_metric_depth, valid_depth)
++            valid_depth = output.depth.detach()[align_mask]
++            valid_metric_depth = metric_output.depth.detach()[align_mask]
++            scale_factor = least_squares_scale_scalar(valid_metric_depth, valid_depth).detach()
+ 
+         # Apply scaling to depth and extrinsics
+-        output.depth *= scale_factor
+-        output.extrinsics[:, :, :3, 3] *= scale_factor
++        output.depth = output.depth * scale_factor
++        scaled_extrinsics = output.extrinsics.detach().clone()
++        scaled_extrinsics[:, :, :3, 3] = scaled_extrinsics[:, :, :3, 3] * scale_factor
++        output.extrinsics = scaled_extrinsics
+         output.is_metric = 1
+         output.scale_factor = scale_factor.item()
+ 
+@@ -422,21 +434,28 @@ class NestedDepthAnything3Net(nn.Module):
+         sky_depth_def: float = 200.0,
+     ) -> Dict[str, torch.Tensor]:
+         """Handle sky regions by setting them to maximum depth."""
+-        non_sky_mask = compute_sky_mask(metric_output.sky, threshold=0.3)
+-
+-        # Compute maximum depth for non-sky regions
+-        # Use sampling to safely compute quantile on large tensors
+-        non_sky_depth = output.depth[non_sky_mask]
+-        if non_sky_depth.numel() > 100000:
+-            idx = torch.randint(0, non_sky_depth.numel(), (100000,), device=non_sky_depth.device)
+-            sampled_depth = non_sky_depth[idx]
+-        else:
+-            sampled_depth = non_sky_depth
+-        non_sky_max = min(torch.quantile(sampled_depth, 0.99), sky_depth_def)
+-
+-        # Set sky regions to maximum depth and high confidence
+-        output.depth, output.depth_conf = set_sky_regions_to_max_depth(
+-            output.depth, output.depth_conf, non_sky_mask, max_depth=non_sky_max
+-        )
++        with torch.no_grad():
++            non_sky_mask = compute_sky_mask(metric_output.sky.detach(), threshold=0.3)
++            non_sky_depth = output.depth.detach()[non_sky_mask]
++            if non_sky_depth.numel() > 100000:
++                idx = torch.randint(0, non_sky_depth.numel(), (100000,), device=non_sky_depth.device)
++                sampled_depth = non_sky_depth[idx]
++            else:
++                sampled_depth = non_sky_depth
++            non_sky_max = torch.minimum(
++                torch.quantile(sampled_depth, 0.99),
++                torch.tensor(
++                    sky_depth_def,
++                    device=sampled_depth.device,
++                    dtype=sampled_depth.dtype,
++                ),
++            ).detach()
++
++        output.depth = torch.where(non_sky_mask, output.depth, non_sky_max)
++        if output.depth_conf is not None:
++            depth_conf = output.depth_conf.clone()
++            depth_conf[~non_sky_mask] = 1.0
++            output.depth_conf = depth_conf
++        output["non_sky_mask"] = non_sky_mask
+ 
+         return output

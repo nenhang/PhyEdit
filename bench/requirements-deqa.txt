@@ -1,0 +1,8 @@
+# Install PyTorch for the target CUDA version separately.
+accelerate
+einops
+Pillow
+tqdm
+transformers==4.37.2
+
+# Install flash-attn separately with `--no-build-isolation` when supported.

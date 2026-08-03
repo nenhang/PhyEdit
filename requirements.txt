@@ -1,0 +1,15 @@
+accelerate
+deepspeed
+diffusers
+matplotlib
+numpy
+peft
+Pillow
+python-dotenv
+PyYAML
+safetensors
+torch
+torchvision
+tqdm
+transformers
+wandb

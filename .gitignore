@@ -1,5 +1,25 @@
 node_modules/
 dist/
-
-.astro/
 .claude/
+
+# Python environments and generated outputs
+.env
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+outputs/
+cache/
+gui_runs/
+/data/
+/tests/
+/bench/tests/
+third_party/
+*.safetensors
+evaluation_manifest.json

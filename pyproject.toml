@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "phyedit"
+version = "0.1.0"
+description = "Physically-grounded image editing for real-world object manipulation"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+authors = [
+  {name = "Ruihang Xu"},
+  {name = "Dewei Zhou"},
+  {name = "Xiaolong Shen"},
+  {name = "Fan Ma"},
+  {name = "Yi Yang"},
+]
+
+[project.urls]
+Homepage = "https://nenhang.github.io/PhyEdit"
+Repository = "https://github.com/nenhang/PhyEdit"
+Paper = "https://arxiv.org/abs/2604.07230"
+Dataset = "https://huggingface.co/datasets/ruihangxu/RealManip-40K"
+Model = "https://huggingface.co/ruihangxu/PhyEdit"
+
+[tool.setuptools.packages.find]
+include = ["phyedit*", "bench*"]
+exclude = ["bench.tests*"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+exclude = ["src", "dist", "node_modules"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E501"]

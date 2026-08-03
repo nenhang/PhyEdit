@@ -1,0 +1,7 @@
+-r ../requirements.txt
+
+openai
+pydantic
+
+# ManipEval also requires PyTorch3D. Install a build compatible with the
+# selected PyTorch/CUDA stack before running the core and motion stages.

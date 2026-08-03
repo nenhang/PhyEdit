@@ -1,0 +1,115 @@
+pretrained_path: "Qwen/Qwen-Image-Edit-2511"
+dtype: "bfloat16"
+
+train:
+  batch_size: 1
+  accumulate_grad_batches: 128
+  dataloader_workers: 4
+  dataloader_multiprocessing_context: "spawn"
+  dataloader_pin_memory: false
+  print_every_n_steps: 10
+  save_interval: 100
+
+  # Set this to a positive optimizer-step interval to enable training previews.
+  sample_interval: 0
+  benchmark_metadata_path: null
+  # Continuous public ManipEval indices for the original four preview cases.
+  sample_bench_indices: [0, 12, 115, 124]
+  sample_preview_cache: true
+  sample_preview_cache_dir: null
+
+  train_method: "sft"
+  text_drop_rate: 0.1
+  # 589824 = 768^2 with aspect-ratio-preserving dynamic dimensions.
+  image_base_area: 589824
+
+  auto_resume: true
+  checkpoint_path: null
+  resume_deepspeed_checkpoint: null
+  resume_epoch: 0
+  resume_world_size: null
+  resume_world_size_policy: "lora_only"
+  resume_preserve_effective_batch: true
+  resume_batch_idx: null
+  legacy_resume_lr: 1.0e-5
+  strict_resume_config: false
+  seed: 42
+
+  save_deepspeed_state: true
+  keep_all_checkpoints: false
+  deepspeed_state_keep_last: 1
+  deepspeed_exclude_frozen_parameters: true
+
+  max_steps: -1
+  max_epochs: 1
+  gradient_checkpointing: true
+  save_path: "./outputs"
+  model_name: "phyedit"
+  checkpoint_name_prefix: "transformer_"
+
+  need_moved_image: true
+  depth_supervise: true
+  depth_model_id: "depth-anything/da3nested-giant-large"
+  depth_loss_lambda: 0.075
+  silog_loss_lambda: 0.5
+  offload_depth_model_during_sampling: false
+  process_visualize: false
+
+  deepspeed:
+    zero_stage: 2
+    offload_optimizer_device: "cpu"
+    offload_param_device: "none"
+    pin_memory: true
+    overlap_comm: true
+    contiguous_gradients: true
+    reduce_scatter: true
+
+  dataset:
+    metadata_path: "./data/RealManip-40K/metadata/train.jsonl"
+
+  dpo_config:
+    beta: 1250
+
+  # Replace null with, for example, {project: "PhyEdit"} to enable Weights & Biases.
+  wandb: null
+
+  lora_config:
+    r: 32
+    lora_alpha: 32
+    init_lora_weights: "gaussian"
+    target_modules: "(.*img_in|.*proj_out|.*transformer_blocks\\.[0-9]+\\.attn\\.to_q|.*transformer_blocks\\.[0-9]+\\.attn\\.to_k|.*transformer_blocks\\.[0-9]+\\.attn\\.to_v|.*transformer_blocks\\.[0-9]+\\.attn\\.add_q_proj|.*transformer_blocks\\.[0-9]+\\.attn\\.add_k_proj|.*transformer_blocks\\.[0-9]+\\.attn\\.add_v_proj|.*transformer_blocks\\.[0-9]+\\.attn\\.to_out\\.0|.*transformer_blocks\\.[0-9]+\\.attn\\.to_add_out|.*transformer_blocks\\.[0-9]+\\.img_mlp\\.net\\.0\\.proj|.*transformer_blocks\\.[0-9]+\\.img_mlp\\.net\\.2|.*transformer_blocks\\.[0-9]+\\.txt_mlp\\.net\\.0\\.proj|.*transformer_blocks\\.[0-9]+\\.txt_mlp\\.net\\.2)"
+    rank_pattern:
+      img_in: 16
+      proj_out: 16
+      to_q: 128
+      to_k: 128
+      to_v: 128
+      add_q_proj: 128
+      add_k_proj: 128
+      add_v_proj: 128
+      to_out.0: 128
+      to_add_out: 128
+      img_mlp.net.0.proj: 64
+      img_mlp.net.2: 64
+      txt_mlp.net.0.proj: 64
+      txt_mlp.net.2: 64
+    alpha_pattern:
+      img_in: 16
+      proj_out: 16
+      to_q: 128
+      to_k: 128
+      to_v: 128
+      add_q_proj: 128
+      add_k_proj: 128
+      add_v_proj: 128
+      to_out.0: 128
+      to_add_out: 128
+      img_mlp.net.0.proj: 64
+      img_mlp.net.2: 64
+      txt_mlp.net.0.proj: 64
+      txt_mlp.net.2: 64
+
+  optimizer:
+    type: "AdamW"
+    params:
+      lr: 1.0e-5
