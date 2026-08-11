@@ -9,11 +9,16 @@ authors:
     url: https://scholar.google.com/citations?user=vAMMc8EAAAAJ
   - name: Fan Ma
     url: https://scholar.google.com/citations?user=FyglsaAAAAAJ
+    notes:
+      - "*"
   - name: Yi Yang
     url: https://scholar.google.com/citations?user=RMSuNFwAAAAJ
+conference: "ACM MM 2026 Poster"
 notes:
   - symbol: ""
     text: "ReLER Lab, CCAI, Zhejiang University"
+  - symbol: "*"
+    text: "Corresponding author"
 links:
   - name: Paper
     url: https://arxiv.org/pdf/2604.07230
@@ -24,23 +29,26 @@ links:
   - name: Code
     url: https://github.com/nenhang/PhyEdit
     icon: ri:github-line
+  - name: Model
+    url: https://huggingface.co/ruihangxu/PhyEdit
+    icon: ri:brain-line
+  - name: Dataset
+    url: https://huggingface.co/datasets/ruihangxu/RealManip-40K
+    icon: ri:database-2-line
 
 theme: device
 favicon: favicon.svg
 description: PhyEdit is a framework for physically-grounded image editing that enables 3D-aware object relocation and manipulation.
-thumbnail: screenshot-light.png
+thumbnail: thumbnail.jpg
 ---
 
 import HighlightedSection from "./components/HighlightedSection.astro";
 import SmallCaps from "./components/SmallCaps.astro";
 import Figure from "./components/Figure.astro";
 import Picture from "./components/Picture.astro";
-import Wide from "./components/Wide.astro";
+import Video from "./components/Video.astro";
 import Carousel from "./components/Carousel.astro";
 import CarouselSlide from "./components/CarouselSlide.astro";
-import TwoColumns from "./components/TwoColumns.astro";
-// import DemoCard from "./components/DemoCard.astro"
-// import ModelViewer from "./components/ModelViewer.astro"
 
 import teaser from "./assets/teaser.webp";
 import modelOverview from "./assets/model_overview.webp";
@@ -48,14 +56,9 @@ import datasetSample from "./assets/dataset_sample.webp";
 import datasetPipeline from "./assets/dataset_contruction_pipeline.webp";
 // import benchDemo from "./assets/bench_demo.webp";
 // import benchDemoAppendix from "./assets/bench_demo_appendix.webp";
-import continuousEdit from "./assets/continuous_edit.webp";
 import contiInitial from "./assets/conti_demos/initial_00.webp";
-import contiFrame01 from "./assets/conti_demos/frame_01.webp";
-import contiFrame02 from "./assets/conti_demos/frame_02.webp";
-import contiFrame03 from "./assets/conti_demos/frame_03.webp";
-import contiFrame04 from "./assets/conti_demos/frame_04.webp";
-import contiFrame05 from "./assets/conti_demos/frame_05.webp";
-import contiFrame06 from "./assets/conti_demos/frame_06.webp";
+import contiDemo from "./assets/conti_demo.mp4";
+import guiDemo from "./assets/gui_demo.mp4";
 import demo01 from "./assets/demos/01.webp";
 import demo02 from "./assets/demos/02.webp";
 import demo03 from "./assets/demos/03.webp";
@@ -77,14 +80,14 @@ import demo14 from "./assets/demos/14.webp";
 </Figure>
 
 <p class="not-prose my-8 text-center text-xl font-medium leading-relaxed text-zinc-700 dark:text-zinc-300">
-  <SmallCaps>PhyEdit</SmallCaps> enables physical-grounded object manipulation in images editing — moving and editing objects in the 3D space with geometric accuracy and physical consistency.
+  <SmallCaps>PhyEdit</SmallCaps> enables physically grounded image editing by manipulating objects in 3D with geometric accuracy and physical consistency.
 </p>
 
 <HighlightedSection>
 
 ## Abstract
 
-Achieving physically accurate object manipulation in image editing is essential for its potential applications in interactive world models. However, existing visual generative models often fail at precise spatial manipulation, resulting in incorrect scaling and positioning of objects. This limitation primarily stems from the lack of explicit mechanisms to incorporate 3D geometry and perspective projection. To achieve accurate manipulation, we develop <SmallCaps>PhyEdit</SmallCaps>, an image editing framework that leverages explicit geometric simulation as contextual 3D-aware visual guidance. By combining this plug-and-play 3D prior with joint 2D–3D supervision, our method effectively improves physical accuracy and manipulation consistency. To support this method and evaluate performance, we present a real-world dataset, <SmallCaps>RealManip-10K</SmallCaps>, for 3D-aware object manipulation featuring paired images and depth annotations. We also propose <SmallCaps>ManipEval</SmallCaps>, a benchmark with multi-dimensional metrics to evaluate 3D spatial control and geometric consistency. Extensive experiments show that our approach outperforms existing methods, including strong closed-source models, in both 3D geometric accuracy and manipulation consistency.
+Achieving physically accurate object manipulation in image editing is essential for its potential applications in interactive world models. However, existing visual generative models often fail at precise spatial manipulation, resulting in incorrect scaling and positioning of objects. This limitation primarily stems from the lack of explicit mechanisms to incorporate 3D geometry and perspective projection. To achieve accurate manipulation, we develop <SmallCaps>PhyEdit</SmallCaps>, an image editing framework that leverages explicit geometric simulation as contextual 3D-aware visual guidance. By combining this plug-and-play 3D prior with joint 2D–3D supervision, our method effectively improves physical accuracy and manipulation consistency. To support this method and evaluate performance, we present a real-world dataset, <SmallCaps>RealManip-40K</SmallCaps>, for 3D-aware object manipulation featuring paired images and depth annotations. We also propose <SmallCaps>ManipEval</SmallCaps>, a benchmark with multi-dimensional metrics to evaluate 3D spatial control and geometric consistency. Extensive experiments show that our approach outperforms existing methods, including strong closed-source models, in both 3D geometric accuracy and manipulation consistency.
 
 </HighlightedSection>
 
@@ -107,36 +110,43 @@ Achieving physically accurate object manipulation in image editing is essential 
   <CarouselSlide><Picture src={demo14} alt="Demo 14" /></CarouselSlide>
 </Carousel>
 
-<p class="not-prose mx-auto mt-2 mb-8 max-w-[50rem] text-center text-sm text-zinc-500 dark:text-zinc-400">Quantitative results on ManipEval, comparing with strong closed-source models <span class="font-semibold text-zinc-700 dark:text-zinc-400">Qwen-Image-2.0-Pro</span> and <span class="font-semibold text-zinc-600 dark:text-zinc-400">Nano Banana Pro</span>. Correct and incorrect manipulations are marked in <span class="text-green-600 dark:text-green-400 font-medium">green</span> and <span class="text-red-600 dark:text-red-400 font-medium">red</span> dashed boxes, respectively.</p>
+<p class="not-prose mx-auto mt-2 mb-8 max-w-[50rem] text-center text-sm text-zinc-500 dark:text-zinc-400">Qualitative comparisons on ManipEval against strong closed-source models <span class="font-semibold text-zinc-700 dark:text-zinc-400">Qwen-Image-2.0-Pro</span> and <span class="font-semibold text-zinc-600 dark:text-zinc-400">Nano Banana Pro</span>. Correct and incorrect manipulations are marked in <span class="text-green-600 dark:text-green-400 font-medium">green</span> and <span class="text-red-600 dark:text-red-400 font-medium">red</span> dashed boxes, respectively.</p>
 
 ## Continuous Object Manipulation
 
-Beyond single-step editing, <SmallCaps>PhyEdit</SmallCaps> maintains geometric consistency under continuous state transitions. Given an initial state and a spatial trajectory, our model sequentially renders physically accurate keyframes that can be processed by video interpolation models to synthesize a continuous, physically consistent manipulation video. The robotic arm below is out of our training distribution, demonstrating strong generalization.
+Beyond single-step editing, <SmallCaps>PhyEdit</SmallCaps> follows a user-defined 3D trajectory while preserving geometric consistency. The out-of-distribution robotic arm highlights the model's generalization.
 
-<Carousel>
-  <CarouselSlide><img src={contiInitial.src} alt="Initial state" class="h-72 w-full object-contain" /></CarouselSlide>
-  <CarouselSlide><img src={contiFrame01.src} alt="Keyframe 1" class="h-72 w-full object-contain" /></CarouselSlide>
-  <CarouselSlide><img src={contiFrame02.src} alt="Keyframe 2" class="h-72 w-full object-contain" /></CarouselSlide>
-  <CarouselSlide><img src={contiFrame03.src} alt="Keyframe 3" class="h-72 w-full object-contain" /></CarouselSlide>
-  <CarouselSlide><img src={contiFrame04.src} alt="Keyframe 4" class="h-72 w-full object-contain" /></CarouselSlide>
-  <CarouselSlide><img src={contiFrame05.src} alt="Keyframe 5" class="h-72 w-full object-contain" /></CarouselSlide>
-  <CarouselSlide><img src={contiFrame06.src} alt="Keyframe 6" class="h-72 w-full object-contain" /></CarouselSlide>
-</Carousel>
+<Figure>
+  <Picture slot="figure" src={contiInitial} alt="Initial scene and user-defined 3D manipulation trajectory" />
+  <Fragment slot="caption">Initial scene and user-defined 3D trajectory.</Fragment>
+</Figure>
 
-<p class="not-prose mx-auto mt-2 mb-8 max-w-[50rem] text-center text-sm text-zinc-500 dark:text-zinc-400">Continuous object manipulation along a trajectory. The first slide shows the initial state; subsequent slides are rendered keyframes. A video model interpolates intermediate frames to produce a smooth manipulation video.</p>
+<figure class="not-prose mx-auto my-6 w-full max-w-[30rem]">
+  <Video src={contiDemo} aria-label="Continuous object manipulation result" />
+  <figcaption class="mt-2 text-center text-sm text-zinc-500 dark:text-zinc-400">Solid boxes mark keyframes generated by <SmallCaps>PhyEdit</SmallCaps>; dashed boxes mark interpolated frames.</figcaption>
+</figure>
+
+## Interactive GUI
+
+The interactive interface supports object segmentation, direct 3D manipulation with live geometric previews, and final image generation with <SmallCaps>PhyEdit</SmallCaps>.
+
+<figure class="not-prose my-6 w-full">
+  <Video src={guiDemo} aria-label="PhyEdit interactive GUI demonstration" />
+  <figcaption class="mt-2 text-center text-sm text-zinc-500 dark:text-zinc-400">Workflow from object selection and 3D manipulation to the final edit.</figcaption>
+</figure>
 
 ## Method
 
-<SmallCaps>PhyEdit</SmallCaps> combines a DiT editing backbone with a 3D foundation model. The framework has three components: (1) a **3D transformation module** that generates a depth-aware preview, (2) the **DiT denoising backbone**, and (3) a **joint training loss** in both 2D latent and 3D depth spaces.
+<SmallCaps>PhyEdit</SmallCaps> augments a DiT image editor with explicit 3D guidance. A **3D transformation module** constructs a depth-aware preview for the backbone, while joint latent- and depth-space losses enforce appearance and geometric consistency.
 
 <Figure>
   <Picture slot="figure" src={modelOverview} alt="Overview of the PhyEdit model architecture" />
-  <Fragment slot="caption">Overview of PhyEdit. User and GT inputs are first processed via the 3D transformation module. The resulting conditions are fed into the backbone for the training forward pass, followed by joint 2D and 3D supervision.</Fragment>
+  <Fragment slot="caption">Overview of PhyEdit. The 3D transformation module converts user controls into a geometric preview for the DiT backbone, trained with joint latent and depth supervision.</Fragment>
 </Figure>
 
 ### 3D Transformation Module
 
-Given a source image $I_\text{src}$, object mask $M_o$, and transition vector $\Delta\mathbf{p}_o$, we predict depth $D$ and camera pose $(R, t)$, then edit the object directly in 3D space:
+Given a source image $I_\text{src}$, object mask $M_o$, and translation $\Delta\mathbf{p}_o$, we estimate depth $D$ and camera pose $(R, t)$, transform the masked object in 3D, and reproject it:
 
 $$
 \mathbf{P}_{o}=\operatorname{Unproj}(I_{\text{src}}, M_{o},D,R,t), \quad
@@ -144,33 +154,33 @@ $$
 I_{\text{prev}}=\operatorname{Proj}(\mathbf{P}'_o,R,t)
 $$
 
-The preview image $I_\text{prev}$ serves as an additional condition for the DiT backbone, providing explicit geometric guidance and naturally supporting multi-object manipulation without iterative editing.
+$I_\text{prev}$ provides explicit geometry to the DiT backbone and supports simultaneous multi-object manipulation.
 
 ### Joint Supervision
 
-Latent-space denoising loss alone is insufficient for 3D manipulation, as it emphasizes appearance reconstruction over geometric correctness. We add a depth-space supervision term using the scale-invariant logarithmic (SILog) loss:
+We complement the flow-matching loss with scale-invariant logarithmic (SILog) depth supervision:
 
 $$
 \mathcal{L} = \mathcal{L}_{\text{flow}} + \lambda_d \mathcal{L}_{\text{depth}}
 $$
 
-where $\lambda_d = 0.1$ balances latent and depth supervision. This is lightweight and plug-and-play — it can be added to different DiT-based editors with minimal modification.
+where $\lambda_d = 0.1$ balances the two terms. This auxiliary supervision requires minimal changes to DiT-based editors.
 
-## RealManip-10K Dataset
+## RealManip-40K Dataset
 
-We build <SmallCaps>RealManip-10K</SmallCaps>, a real-world dataset of paired images $(I_\text{src}, I_\text{tgt})$ where objects are manipulated in 3D space, especially along the depth axis. Each pair provides depth maps, object masks, and representative 3D object coordinates.
+<SmallCaps>RealManip-40K</SmallCaps> contains 41,154 real-world source-target pairs with 3D object motion, including depth-axis changes. Each pair includes depth maps, object masks, and representative 3D coordinates.
 
 <Figure>
-  <Picture slot="figure" src={datasetSample} alt="Sample image pairs from the RealManip-10K dataset" />
-  <Fragment slot="caption">Samples from <SmallCaps>RealManip-10K</SmallCaps>. Objects are annotated with bounding boxes, and 3D coordinates $(x, y, z)$ are given in the camera coordinate system.</Fragment>
+  <Picture slot="figure" src={datasetSample} alt="Sample image pairs from the RealManip-40K dataset" />
+  <Fragment slot="caption">Samples from <SmallCaps>RealManip-40K</SmallCaps> with object boxes and representative camera-space 3D coordinates.</Fragment>
 </Figure>
 
 <Figure>
-  <Picture slot="figure" src={datasetPipeline} alt="The four-stage pipeline used to construct RealManip-10K" />
+  <Picture slot="figure" src={datasetPipeline} alt="The four-stage pipeline used to construct RealManip-40K" />
   <Fragment slot="caption">Dataset construction pipeline: data source filtering → camera-static clip extraction → depth and mask processing → depth-aware frame pair selection.</Fragment>
 </Figure>
 
-The pipeline collects videos from OpenVid-1M, VIDGEN-1M, PE-Video-Dataset, and object-tracking datasets (LaSOT, GoT-10K, TrackingNet). A novel **camera token clustering** approach using DBSCAN ensures near-static camera conditions without relying on optical flow or hand-crafted feature matching.
+DBSCAN-based **camera token clustering** selects near-static clips before depth, mask, and frame-pair processing.
 
 ## Experiments
 
@@ -178,12 +188,6 @@ The pipeline collects videos from OpenVid-1M, VIDGEN-1M, PE-Video-Dataset, and o
 
 | Method | DIoU ↑ | Mask IoU ↑ | AbsRel ↓ | δ₁.₂₅ ↑ | Chamfer ↓ | Centroid ↓ | RA-DINO ↑ | DeQA ↑ | Phys-VLM ↑ |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| GeoDiffuser | 51.72 | 20.10 | 67.64 | 31.40 | 73.41 | 64.56 | 14.78 | 56.72 | 54.62 |
-| DiffusionHandles | 56.22 | 18.88 | 57.36 | 31.73 | 73.00 | 59.65 | 17.08 | 61.83 | 46.90 |
-| Move-and-Act | 46.89 | 10.97 | 68.47 | 29.30 | 64.59 | 63.62 | 13.01 | 60.79 | 60.85 |
-| OBJect 3DIT | 46.63 | 10.18 | 66.93 | 32.75 | 62.30 | 64.14 | 14.31 | 48.01 | 66.65 |
-| GoodDrag | 51.07 | 13.29 | 69.60 | 34.19 | 51.27 | 58.39 | 20.85 | 74.08 | 85.08 |
-| PixelMan | 49.48 | 11.49 | 66.46 | 35.10 | 50.18 | 57.13 | 21.17 | 72.79 | 73.60 |
 | Qwen-Image-Edit | 53.28 | 13.80 | 64.63 | 40.61 | 46.31 | 52.48 | 26.09 | 75.67 | 90.55 |
 | LightningDrag | 53.81 | 18.90 | 57.07 | 35.99 | 45.76 | 53.57 | 21.92 | 73.60 | 88.60 |
 | ChronoEdit | 48.92 | 9.26 | 65.80 | 36.35 | 45.02 | 54.40 | 21.73 | 75.29 | 92.15 |

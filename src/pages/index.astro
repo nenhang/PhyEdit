@@ -37,6 +37,12 @@ const {
 
 const baseUrl = import.meta.env.BASE_URL;
 const prefix = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
+const thumbnailUrl =
+  thumbnail && Astro.site
+    ? new URL(prefix + thumbnail, Astro.site).href
+    : thumbnail
+      ? prefix + thumbnail
+      : undefined;
 ---
 
 <!doctype html>
@@ -52,7 +58,10 @@ const prefix = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
     <meta property="og:title" content={title} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:type" content="website" />
-    {thumbnail && <meta property="og:image" content={prefix + thumbnail} />}
+    {thumbnailUrl && <meta property="og:image" content={thumbnailUrl} />}
+    {thumbnailUrl && <meta property="og:image:type" content="image/jpeg" />}
+    {thumbnailUrl && <meta property="og:image:width" content="1200" />}
+    {thumbnailUrl && <meta property="og:image:height" content="630" />}
 
     <title>{title}</title>
   </head>
@@ -63,8 +72,8 @@ const prefix = baseUrl.endsWith("/") ? baseUrl : baseUrl + "/";
       <h1 class="text-5xl font-medium">{title}</h1>
       <div class="flex flex-col items-center gap-6">
         <Authors authors={authors} />
-        {conference && <div>{conference}</div>}
         {notes && <Notes notes={notes} />}
+        {conference && <div class="text-xl font-medium">{conference}</div>}
         {links && <Links links={links} />}
       </div>
     </header>

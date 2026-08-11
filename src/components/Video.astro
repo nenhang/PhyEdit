@@ -6,21 +6,24 @@ interface Props extends HTMLAttributes<"video"> {
 
 const {
   src,
+  class: className,
   controls = true,
   loop = true,
   playsinline = true,
   muted = true,
   autoplay = true,
+  preload = "metadata",
   ...videoProps
 } = Astro.props;
 ---
 
 <video
-  class="aspect-video h-auto w-full rounded-lg"
+  class:list={["h-auto w-full rounded-lg", className]}
   src={src}
   controls={controls}
   loop={loop}
   playsinline={playsinline}
   muted={muted}
   autoplay={autoplay}
+  preload={preload}
   {...videoProps}></video>
